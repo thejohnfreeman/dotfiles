@@ -1,0 +1,16 @@
+[alias]
+  au = add --update .
+  ca = commit --amend
+  cm = commit --message
+  d = diff --stat
+  dc = diff --cached
+  l = log --graph --decorate --pretty=oneline --abbrev-commit --max-count 10 HEAD
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  s = status
+[user]
+  email = jfreeman08@gmail.com
+  name = John Freeman
+[push]
+  default = simple
+[core]
+  excludesfile = /home/jfreeman/.gitignore

@@ -20,6 +20,13 @@ fi
 set -o vi
 export EDITOR=vim
 
+export HISTCONTROL='ignoredups'
+export HISTSIZE='50000000'
+export HISTFILESIZE='50000000'
+export HISTIGNORE=" *:&:[bf]g:exit:pwd:l"
+export HISTFILE="$HOME/.bash_history"
+shopt -s histappend
+
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
@@ -28,3 +35,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 echo sourced $HOME/.profile
 
 source ~/.bashrc
+source ~/.bash_prompt

@@ -1,0 +1,59 @@
+RED="\[\e[31m\]"
+GREEN="\[\e[32m\]"
+YELLOW="\[\e[33m\]"
+BLUE="\[\e[34m\]"
+VIOLET="\[\e[35m\]"
+CYAN="\[\e[36m\]"
+WHITE="\[\e[37m\]"
+RESET="\[\e[0m\]"
+
+function split() {
+  local SAVED_IFS="$IFS"
+  IFS="$2"; SPLIT=($1); IFS="$SAVED_IFS"
+}
+
+function join() {
+  local SAVED_IFS="$IFS"
+  local -a array=("${!1}")
+  IFS="$2"; JOIN="${array[*]}"; IFS="$SAVED_IFS"
+}
+
+function prompt_host() {
+  if [ -n "$SSH_CLIENT" ]; then
+    HOST=$(hostname | sed -e "s:^$HOMESERVER::" -e "s:\.\?$INTRANET\$::")
+    if [ -n "$HOST" ]; then
+      echo @$HOST
+    fi
+  fi
+}
+
+MAX_CWD_LENGTH=32
+
+function prompt_cwd() {
+  # fix path for home directories on NFS
+  # sometimes they are under the NFS mount path,
+  # sometimes they have a host alias,
+  # so test against both $HOME and its absolute path
+  # readlink -f is not available on all platforms
+  # use this technique for portability
+  local CWD=$(echo $PWD | sed -e "s;^$(cd -P; echo $PWD);~;" -e "s;^$HOME;~;")
+
+  # abbreviate as many path segments as necessary (excluding the last) until the
+  # path fits into the allotted space
+  split $CWD "/"
+  local SEGS=(${SPLIT[*]})
+  local MAX_INDEX=$(expr ${#SEGS[@]} - 1) # length minus one
+  local i=1
+  while [ ${#CWD} -gt $MAX_CWD_LENGTH -a $i -lt $MAX_INDEX ]; do
+    SEGS[$i]=${SEGS[$i]:0:1}
+    join SEGS[@] "/"
+    CWD=$JOIN
+    i=$(expr $i + 1)
+  done
+
+  echo $CWD
+}
+
+TITLE="\u\$(prompt_host):\$(prompt_cwd)"
+PROMPT="$YELLOW[\D{%F %T}] $VIOLET\$(prompt_cwd) $RESET\n\$ "
+PS1="\[\e]2;$TITLE\a\]$PROMPT"

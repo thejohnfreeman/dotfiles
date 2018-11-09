@@ -161,9 +161,10 @@ augroup END
 " ==========
 
 set expandtab
-set tabstop=2
-set softtabstop=2
+set nojoinspaces
 set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set textwidth=78
 
 " Insert comment leader when pressing <Enter> in Insert mode.

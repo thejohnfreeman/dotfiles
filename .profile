@@ -17,6 +17,9 @@ then
   export DO_NOT_EXPORT=
 fi
 
+# Remove group write and other read/write permissions.
+umask 026
+
 set -o vi
 export EDITOR=vim
 

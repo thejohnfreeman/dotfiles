@@ -23,11 +23,13 @@ umask 026
 set -o vi
 export EDITOR=vim
 
-export HISTCONTROL='ignoredups'
+# Don't put duplicate lines or lines starting with space in the history.
+export HISTCONTROL='ignoreboth'
 export HISTSIZE='50000000'
 export HISTFILESIZE='50000000'
-export HISTIGNORE=" *:&:[bf]g:exit:pwd:l"
+export HISTIGNORE="&:[bf]g:exit:pwd:l"
 export HISTFILE="$HOME/.bash_history"
+# Append to the history file instead of overwriting it.
 shopt -s histappend
 
 BASE16_SHELL="$HOME/.config/base16-shell/"

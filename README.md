@@ -1,7 +1,7 @@
 ## Installation
 
 ```
-git clone --separate-git-dir=$HOME/.files https://github.com/thejohnfreeman/dotfiles $HOME
+git clone --separate-git-dir=$HOME/.files git@github.com:thejohnfreeman/dotfiles.git $HOME
 ```
 
 - [Base16 Shell](https://github.com/chriskempson/base16-shell)

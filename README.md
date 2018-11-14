@@ -10,7 +10,12 @@ git clone --separate-git-dir=$HOME/.files git@github.com:thejohnfreeman/dotfiles
     git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
     ```
 
-You may need to install a color profile for your terminal emulator.
+- [Base16 Gnome Terminal](https://github.com/aaron-williamson/base16-gnome-terminal)
+
+    ```
+    git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
+    ~/.config/base16-gnome-terminal/color-scripts/base16-tomorrow-night-256.sh
+    ```
 
 ## Acknowledgments
 

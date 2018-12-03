@@ -7,6 +7,8 @@
 " warnings in JSON are low contrast gray-on-black.
 let g:vim_json_warnings = 0
 
+" let g:slimux_tmux_path = '/usr/local/bin/tmux'
+
 call plug#begin()
 " Better default settings for Vim.
 Plug 'tpope/vim-sensible'
@@ -50,6 +52,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 " Use tmux as a REPL.
 Plug 'jpalardy/vim-slime'
+" Use tmux as a REPL.
+" Plug 'epeli/slimux'
 " Search file contents in the quickfix list.
 Plug 'mileszs/ack.vim'
 call plug#end()
@@ -84,6 +88,21 @@ nnoremap <Leader>q :q<Return>
 
 " Enable vim-slime from insert mode.
 inoremap <silent> <C-c><C-c> <C-o>:SlimeSend<Return>
+" TODO: In normal mode, send the paragraph, not the line.
+" TODO: Bind <C-c> to a verb.
+" https://github.com/epeli/slimux/issues/66
+" nnoremap <C-c> :<C-u>set operatorfunc=SlimuxREPLSendTextObject<CR>g@
+" nnoremap <C-c><C-c> :SlimuxREPLSendLine<CR>
+" vnoremap <C-c> :SlimuxREPLSendSelection<CR>
+
+" function! SlimuxREPLSendTextObject(type, ...) abort
+"   let saved_unnamed_register = @@
+
+"   silent execute "normal! '[V']y"
+"   '[,']SlimuxREPLSendSelection
+
+"   let @@ = saved_unnamed_register
+" endfunction
 
 " Expand and shrink visual selections.
 vmap v <Plug>(expand_region_expand)

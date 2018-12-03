@@ -15,6 +15,7 @@
 if test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
+  export PATH="$HOME/.local/bin:$PATH"
 fi
 
 set -o vi
@@ -32,7 +33,10 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-echo sourced $HOME/.profile
+# Print notification only for interactive shells.
+if [ -n "$(echo $- | grep i)" ]; then
+  echo "sourced $HOME/.profile" >&2
+fi
 
 source ~/.bashrc
 source ~/.bash_prompt

@@ -1,16 +1,22 @@
 ## Installation
 
 ```
-git clone --separate-git-dir=$HOME/.files https://github.com/thejohnfreeman/dotfiles $HOME
+git clone --separate-git-dir=$HOME/.files git@github.com:thejohnfreeman/dotfiles.git $HOME
 ```
 
-- [Base16 Shell](https://github.com/chriskempson/base16-shell)
-
-    ```
-    git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
-    ```
-
 - [Base16 iTerm2](https://github.com/martinlindhe/base16-iterm2)
+
+    ```
+    git clone https://github.com/martinlindhe/base16-iterm2.git ~/code/base16-iterm2
+    ```
+
+    iTerm2
+    -> Preferences
+    -> Profiles
+    -> Colors
+    -> Color Presets
+    -> Import
+    -> `base16-tomorrow-night-256.itermcolors`
 
 ## Acknowledgments
 

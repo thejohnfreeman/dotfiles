@@ -27,12 +27,10 @@ export HISTIGNORE=" *:&:[bf]g:exit:pwd:l"
 export HISTFILE="$HOME/.bash_history"
 shopt -s histappend
 
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
-
-echo sourced $HOME/.profile
+# Print notification only for interactive shells.
+if [ -n "$(echo $- | grep i)" ]; then
+  echo "sourced $HOME/.profile" >&2
+fi
 
 source ~/.bashrc
 source ~/.bash_prompt

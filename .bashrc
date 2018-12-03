@@ -15,4 +15,7 @@ source ~/.bash_aliases
 # checked that it plays nicely with environment variables.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-echo sourced $HOME/.bashrc
+# Print notification only for interactive shells.
+if [ -n "$(echo $- | grep i)" ]; then
+  echo "sourced $HOME/.bashrc" >&2
+fi

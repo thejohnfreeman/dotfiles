@@ -1,3 +1,11 @@
+tad() {
+  local ts=$(date +%s)
+  local d="$HOME/.throw-away/$ts"
+  mkdir -p $d
+  (cd $d; $SHELL)
+  rm -rf $d
+}
+
 mount_shared() {
   sudo mount --types vboxsf shared ~/shared
 }

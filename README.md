@@ -4,12 +4,6 @@
 git clone --separate-git-dir=$HOME/.files git@github.com:thejohnfreeman/dotfiles.git $HOME
 ```
 
-- [Base16 Shell](https://github.com/chriskempson/base16-shell)
-
-    ```
-    git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
-    ```
-
 - [Base16 Gnome Terminal](https://github.com/aaron-williamson/base16-gnome-terminal)
 
     ```

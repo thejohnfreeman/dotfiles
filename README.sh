@@ -9,11 +9,6 @@ sudo add-apt-repository ppa:cwchien/gradle
 sudo apt-get install curl entr tmux git nodejs npm vim-gtk xclip tree yarn \
   silversearcher-ag stack openjdk-8-jdk gradle jq libssl-dev cmake
 
-# Install base16 color scheme for shell
-mkdir ~/software
-(cd ~/software; git clone https://github.com/chriskempson/base16-shell)
-source ~/software/base16-shell/scripts/base16-tomorrow-night.sh
-
 # https://docs.haskellstack.org/en/stable/install_and_upgrade/
 curl -sSL https://get.haskellstack.org/ | sh
 

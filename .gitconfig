@@ -2,15 +2,19 @@
   au = add --update .
   ca = commit --amend
   cm = commit --message
+  cum = commit --only . --message
   d = diff --stat
   dc = diff --cached
-  l = log --graph --decorate --pretty=oneline --abbrev-commit --max-count 10 HEAD
-  lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
-  s = status
+  l = log --graph --topo-order --decorate --oneline --color -10 HEAD
+  lol = log --graph --topo-order --decorate --oneline --color --all
+  s = status --short
+  exec = "!exec "
 [user]
   email = jfreeman08@gmail.com
   name = John Freeman
 [push]
   default = simple
 [core]
-  excludesfile = /home/jfreeman/.gitignore
+  excludesfile = ~/.gitignore
+[color]
+  ui = true

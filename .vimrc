@@ -193,7 +193,7 @@ set formatoptions+=1
 let g:ale_fixers = {
       \  'css': ['prettier'],
       \  'javascript': ['standard'],
-      \  'typescript': ['tslint'],
+      \  'typescript': ['prettier'],
       \}
 let g:ale_fix_on_save = 1
 

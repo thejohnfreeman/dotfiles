@@ -1,2 +1,4 @@
 .*.swp
 /yarn.lock
+/cmake-build-debug/
+/.vscode/

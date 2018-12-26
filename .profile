@@ -12,9 +12,13 @@
 # the whole script with a guard, but this way lets us use it as a factory
 # reset.
 
-if test ${DO_NOT_EXPORT+true}
+# `test` returns true (0) if it is given a non-empty string.
+if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 # Remove group write and other read/write permissions.

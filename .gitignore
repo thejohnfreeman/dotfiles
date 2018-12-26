@@ -2,3 +2,4 @@
 /yarn.lock
 /cmake-build-debug/
 /.vscode/
+.python-version

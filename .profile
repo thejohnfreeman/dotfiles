@@ -12,10 +12,12 @@
 # the whole script with a guard, but this way lets us use it as a factory
 # reset.
 
-if test ${DO_NOT_EXPORT+true}
+if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
   export PATH="$HOME/.local/bin:$PATH"
+  export PATH="$HOME/.pyenv/shims:$PATH"
+  eval "$(pyenv init -)"
 fi
 
 set -o vi

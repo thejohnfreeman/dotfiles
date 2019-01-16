@@ -3,9 +3,13 @@
 " Install vim-plug as the plugin manager:
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+set nocompatible
+
 " With the base16-tomorrow colorscheme,
 " warnings in JSON are low contrast gray-on-black.
 let g:vim_json_warnings = 0
+
+let g:polyglot_disabled = ['typescript', 'tsx']
 
 " let g:slimux_tmux_path = '/usr/local/bin/tmux'
 
@@ -26,6 +30,7 @@ Plug 'jaxbot/semantic-highlight.vim'
 " Syntax files are loaded on-demand, and the list of language-specific plugins
 " is curated and regularly updated.
 Plug 'sheerun/vim-polyglot'
+Plug 'leafgarland/typescript-vim'
 " Fuzzy search everywhere.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Remind me of register contents when I press `"`.
@@ -56,8 +61,11 @@ Plug 'jpalardy/vim-slime'
 " Plug 'epeli/slimux'
 " Search file contents in the quickfix list.
 Plug 'mileszs/ack.vim'
+" Asynchronous Lint Engine.
+Plug 'w0rp/ale'
 call plug#end()
 
+" DONE: typescript-vim vs yats.vim vs LanguageClient-neovim vs deoplete.nvim
 " TODO: vim-gitgutter + terminus OR vim-signify (mark diff in gutter)
 " TODO: vim-stay (preserve buffer state)
 " TODO: Konfekt/FastFold + tmhedberg/simpylfold (fold Python)
@@ -70,6 +78,11 @@ call plug#end()
 
 " Be quiet.
 set visualbell
+
+" Turn off safe-write for Parcel.
+" https://github.com/parcel-bundler/parcel/issues/382#issuecomment-353644874
+set nobackup
+set nowritebackup
 
 
 " Mappings
@@ -180,6 +193,7 @@ augroup END
 " ==========
 
 set expandtab
+" Separate sentences with only one space when joining lines.
 set nojoinspaces
 set shiftwidth=2
 set softtabstop=2
@@ -194,6 +208,13 @@ set formatoptions+=o
 set formatoptions+=l
 " Break before a one-letter word instead of after.
 set formatoptions+=1
+
+let g:ale_fixers = {
+      \  'css': ['prettier'],
+      \  'javascript': ['standard'],
+      \  'typescript': ['prettier'],
+      \}
+let g:ale_fix_on_save = 1
 
 
 " Search
@@ -312,7 +333,8 @@ let g:rainbow_active = 1
 
 let g:lightline = {
   \ 'colorscheme': 'seoul256',
-  \ 'inactive': { 'left': [['filename', 'modified']] },
+  \ 'inactive': { 'left': [['relativepath', 'modified']] },
+  \ 'active': { 'left': [['mode'], ['relativepath', 'modified']] },
   \ }
 
 let g:rainbow_conf = {

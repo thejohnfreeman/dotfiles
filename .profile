@@ -12,19 +12,29 @@
 # the whole script with a guard, but this way lets us use it as a factory
 # reset.
 
-if test ${DO_NOT_EXPORT+true}
+if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
+  export PATH="$HOME/.local/bin:$PATH"
+  export PATH="$HOME/.pyenv/shims:$PATH"
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
 fi
+
+# Remove group write and other read/write permissions.
+umask 026
 
 set -o vi
 export EDITOR=vim
 
-export HISTCONTROL='ignoredups'
+# Don't put duplicate lines or lines starting with space in the history.
+export HISTCONTROL='ignoreboth'
 export HISTSIZE='50000000'
 export HISTFILESIZE='50000000'
-export HISTIGNORE=" *:&:[bf]g:exit:pwd:l"
+export HISTIGNORE="&:[bf]g:exit:pwd:l"
 export HISTFILE="$HOME/.bash_history"
+# Append to the history file instead of overwriting it.
 shopt -s histappend
 
 # Print notification only for interactive shells.

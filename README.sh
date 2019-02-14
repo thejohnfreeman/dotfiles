@@ -10,9 +10,14 @@ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 # https://yarnpkg.com/lang/en/docs/install/#debian-stable
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# https://code.visualstudio.com/docs/setup/linux
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 
+sudo apt install apt-transport-https
 sudo apt update
-sudo apt install curl entr tmux git nodejs vim-gtk xclip yarn tree \
+sudo apt install code curl entr tmux git nodejs vim-gtk xclip yarn tree \
   silversearcher-ag stack openjdk-8-jdk gradle jq libssl-dev cmake firefox \
   zlib-dev
 

@@ -15,6 +15,8 @@ git --work-tree=$HOME checkout --force ubuntu
     ~/.config/base16-gnome-terminal/color-scripts/base16-tomorrow-night-256.sh
     ```
 
+    Then select new profile in preferences and restart terminal.
+
 ## Acknowledgments
 
 [The best way to store your dotfiles: A bare Git repository](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/)

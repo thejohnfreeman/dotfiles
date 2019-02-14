@@ -1,7 +1,11 @@
 ## Installation
 
 ```
-git clone --separate-git-dir=$HOME/.files git@github.com:thejohnfreeman/dotfiles.git $HOME
+export GIT_DIR=$HOME/.files
+git init --bare
+git remote add origin git@github.com:thejohnfreeman/dotfiles.git
+git fetch
+git --work-tree=$HOME checkout --force ubuntu
 ```
 
 - [Base16 Gnome Terminal](https://github.com/aaron-williamson/base16-gnome-terminal)
@@ -14,6 +18,7 @@ git clone --separate-git-dir=$HOME/.files git@github.com:thejohnfreeman/dotfiles
 ## Acknowledgments
 
 [The best way to store your dotfiles: A bare Git repository](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/)
+[How to git clone into an existing, non-empty directory](https://stackoverflow.com/a/33695754)
 
 ```
 git init --bare $HOME/.files

@@ -16,7 +16,9 @@
 if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
+  export PATH="$HOME/.yarn/bin:$PATH"
   export PATH="$HOME/.pyenv/bin:$PATH"
+  export PATH="$HOME/.local/bin:$PATH"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi

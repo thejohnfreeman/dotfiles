@@ -2,11 +2,13 @@
   au = add --update .
   ca = commit --amend
   cm = commit --message
+  co = checkout
   cum = commit --only . --message
   d = diff --stat
   dc = diff --cached
   l = log --graph --topo-order --decorate --oneline --color -10 HEAD
-  lol = log --graph --topo-order --decorate --oneline --color --all
+  lol = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' --all
+  ls = ls-files
   s = status --short
   exec = "!exec "
 [user]

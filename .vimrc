@@ -10,6 +10,8 @@ set nocompatible
 let g:vim_json_warnings = 0
 
 let g:polyglot_disabled = ['typescript', 'tsx']
+let g:ale_completion_enabled = 1
+let g:ale_set_balloons = 1
 
 call plug#begin()
 " Better default settings for Vim.
@@ -59,6 +61,8 @@ Plug 'jpalardy/vim-slime'
 Plug 'mileszs/ack.vim'
 " Asynchronous Lint Engine.
 Plug 'w0rp/ale'
+" Mark diff in the gutter.
+Plug 'mhinz/vim-signify'
 call plug#end()
 
 " DONE: typescript-vim vs yats.vim vs LanguageClient-neovim vs deoplete.nvim
@@ -75,11 +79,6 @@ call plug#end()
 " Be quiet.
 set visualbell
 
-" Turn off safe-write for Parcel.
-" https://github.com/parcel-bundler/parcel/issues/382#issuecomment-353644874
-set nobackup
-set nowritebackup
-
 
 " Mappings
 " ========
@@ -95,6 +94,25 @@ nnoremap <Leader>w :w<Return>
 " Quit.
 nnoremap <Leader>q :q<Return>
 
+" Step through errors from ALE.
+nmap <silent> [e <Plug>(ale_previous_wrap)
+nmap <silent> ]e <Plug>(ale_next_wrap)
+" Protect these mappings from vim-unimpaired.
+let g:nremap = {"[e": "", "]e": ""}
+
+" Tab through completions.
+inoremap <silent> <Tab> <C-r>=pumvisible() ? "\<lt>C-N>" : "\<lt>Tab>"<Return>
+inoremap <silent> <S-Tab> <C-r>=pumvisible() ? "\<lt>C-P>" : "\<lt>S-Tab>"<Return>
+
+" Language Server functions.
+nmap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<Return><Return>
+imap <silent> <F2> <Esc>:ALEGoToDefinition<Return>
+nmap <silent> <F2> :ALEGoToDefinition<Return>
+nmap <silent> <F7> :ALEFindReferences<Return>
+
+" Go back with Backspace.
+nnoremap <silent> <Backspace> <C-o>
+
 " Enable vim-slime from insert mode.
 inoremap <silent> <C-c><C-c> <C-o>:SlimeSend<Return>
 
@@ -107,7 +125,6 @@ nnoremap Y y$
 
 " Do what I mean, not what I say.
 inoremap <F1> <Esc>
-nnoremap <F1> <Esc>
 vnoremap <F1> <Esc>
 nnoremap q: :q
 command! Q q
@@ -119,6 +136,10 @@ command! Wq wq
 " =========
 
 " Yank to and paste from the system clipboard by default.
+" On Linux, `unnamed` goes to `XA_PRIMARY`,
+" and `unnamedplus` goes to `XA_CLIPBOARD`.
+" `XA_PRIMARY` stores the mouse selection.
+" VMware Workstation syncs the Windows clipboard with XA_PRIMARY.
 set clipboard=unnamed
 
 " Do not overwrite the default register when changing text.
@@ -169,6 +190,8 @@ augroup trailing
   autocmd InsertLeave * :set listchars+=trail:⌴
 augroup END
 
+let g:signify_vcs_list = ['git']
+
 
 " Formatting
 " ==========
@@ -190,9 +213,13 @@ set formatoptions+=l
 " Break before a one-letter word instead of after.
 set formatoptions+=1
 
+let g:ale_linters = {
+      \  'cpp': [],
+      \}
 let g:ale_fixers = {
+      \  'cpp': [],
       \  'css': ['prettier'],
-      \  'javascript': ['standard'],
+      \  'javascript': ['prettier'],
       \  'typescript': ['prettier'],
       \}
 let g:ale_fix_on_save = 1
@@ -235,6 +262,9 @@ endif
 
 " Do not keep a backup file (use version control instead).
 set nobackup
+" Turn off safe-write for Parcel.
+" https://github.com/parcel-bundler/parcel/issues/382#issuecomment-353644874
+set nowritebackup
 
 " Match tmux's split direction.
 set splitright

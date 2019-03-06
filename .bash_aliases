@@ -19,5 +19,5 @@ watch() {
 alias config='git --git-dir=$HOME/.files --work-tree=$HOME'
 alias l='ls -F --color=auto'
 alias la='ls -AF --color=auto'
-alias ll='ls -Fhl --color=auto'
+alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'
 alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'

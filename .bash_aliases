@@ -2,7 +2,7 @@ tad() {
   local ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"
   mkdir -p $d
-  (cd $d; $SHELL)
+  (cd $d; $SHELL -l)
   rm -rf $d
 }
 

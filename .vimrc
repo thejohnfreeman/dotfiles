@@ -74,6 +74,7 @@ call plug#end()
 " TODO: kana/vim-textobj-user ("argument" text objects?)
 " TODO: rstacruz/sparkup OR emmetio/emmet (HTML completion and editing)
 " TODO: xolox/vim-session
+" TODO: rbong/flog
 
 
 " Be quiet.
@@ -213,8 +214,13 @@ set formatoptions+=l
 " Break before a one-letter word instead of after.
 set formatoptions+=1
 
+" Make vim-commentary use C++-style comments instead of C-style comments.
+" https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
+autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
+autocmd FileType c,cpp,cs,java setlocal shiftwidth=4 tabstop=4
+
 let g:ale_linters = {
-      \  'cpp': [],
+      \  'cpp': ['clangd'],
       \}
 let g:ale_fixers = {
       \  'cpp': [],

@@ -89,11 +89,11 @@ set visualbell
 let mapleader=' '
 nnoremap <Leader>/ :Ack!
 " Fuzzy search for a file.
-nnoremap <Leader>f :FZF<Return>
+nnoremap <Leader>f :FZF<CR>
 " Save.
-nnoremap <Leader>w :w<Return>
+nnoremap <Leader>w :w<CR>
 " Quit.
-nnoremap <Leader>q :q<Return>
+nnoremap <Leader>q :q<CR>
 
 " Step through errors from ALE.
 nmap <silent> [e <Plug>(ale_previous_wrap)
@@ -101,21 +101,38 @@ nmap <silent> ]e <Plug>(ale_next_wrap)
 " Protect these mappings from vim-unimpaired.
 let g:nremap = {"[e": "", "]e": ""}
 
-" Tab through completions.
-inoremap <silent> <Tab> <C-r>=pumvisible() ? "\<lt>C-N>" : "\<lt>Tab>"<Return>
-inoremap <silent> <S-Tab> <C-r>=pumvisible() ? "\<lt>C-P>" : "\<lt>S-Tab>"<Return>
+" Return true if all the characters to the left of the cursor are whitespace.
+function! CursorAfterOnlyWhitespace()
+  return strcharpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+endfunction
+
+function! TabComplete(complete, indent)
+  if pumvisible()
+    " Tab through completions.
+    return a:complete
+  endif
+  if CursorAfterOnlyWhitespace()
+    " Indent.
+    return a:indent
+  endif
+  " Find completions.
+  return "\<C-\>\<C-O>:ALEComplete\<CR>"
+endfunction
+
+inoremap <silent> <Tab> <C-R>=TabComplete("\<lt>C-N>", "\<lt>Tab>")<CR>
+inoremap <silent> <S-Tab> <C-R>=TabComplete("\<lt>C-P>", "\<lt>S-Tab>")<CR>
 
 " Language Server functions.
-nmap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<Return><Return>
-imap <silent> <F2> <Esc>:ALEGoToDefinition<Return>
-nmap <silent> <F2> :ALEGoToDefinition<Return>
-nmap <silent> <F7> :ALEFindReferences<Return>
+nmap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<CR><CR>
+nmap <silent> <F2> :ALEGoToDefinition<CR>
+imap <silent> <F2> <Esc><F2>
+nmap <silent> <F7> :ALEFindReferences<CR>
 
 " Go back with Backspace.
-nnoremap <silent> <Backspace> <C-o>
+nnoremap <silent> <Backspace> <C-O>
 
 " Enable vim-slime from insert mode.
-inoremap <silent> <C-c><C-c> <C-o>:SlimeSend<Return>
+inoremap <silent> <C-C><C-C> <C-O>:SlimeSend<CR>
 
 " Expand and shrink visual selections.
 vmap v <Plug>(expand_region_expand)
@@ -240,10 +257,10 @@ set hlsearch
 " https://stackoverflow.com/questions/11940801/mapping-esc-in-vimrc-causes-bizarre-arrow-behaviour/16027716#16027716
 " TODO: Presently broken when tmux is not running.
 " if has('gui_running')
-"   nnoremap <Esc> :nohlsearch<Return><Esc>
+"   nnoremap <Esc> :nohlsearch<CR><Esc>
 " else
 "   augroup no_highlight
-"     autocmd TermResponse * nnoremap <Esc> :nohlsearch<Return><Esc>
+"     autocmd TermResponse * nnoremap <Esc> :nohlsearch<CR><Esc>
 "   augroup END
 " end
 

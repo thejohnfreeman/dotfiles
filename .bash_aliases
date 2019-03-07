@@ -6,6 +6,10 @@ tad() {
   rm -rf $d
 }
 
+xcp() {
+  xclip -out -selection clipboard | xclip -in -selection primary
+}
+
 mount_shared() {
   sudo mount --types vboxsf shared ~/shared
 }

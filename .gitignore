@@ -1,6 +1,6 @@
 .*.swp
-/yarn.lock
-/cmake-build-debug/
-/.vscode/
+yarn.lock
+cmake-build-debug/
+.vscode/
 .python-version
 compile_commands.json

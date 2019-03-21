@@ -90,10 +90,20 @@ let mapleader=' '
 nnoremap <Leader>/ :Ack!
 " Fuzzy search for a file.
 nnoremap <Leader>f :FZF<CR>
+" Make a Markdown link.
+vnoremap <Leader>l c[<C-R>"]()<Esc>
+" Make inline code in Markdown.
+vnoremap <Leader>` c`<C-R>"`<Esc>
+nnoremap <Leader>` ysiw`
+" Make bold text in Markdown.
+vnoremap <Leader>8 c**<C-R>"**<Esc>
+nnoremap <Leader>8 ysiw*l.
 " Save.
 nnoremap <Leader>w :w<CR>
 " Quit.
 nnoremap <Leader>q :q<CR>
+" Format paragraph.
+nnoremap <Leader>= gqap
 
 " Step through errors from ALE.
 nmap <silent> [e <Plug>(ale_previous_wrap)

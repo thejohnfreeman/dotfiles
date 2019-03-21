@@ -122,6 +122,13 @@ endfunction
 inoremap <silent> <Tab> <C-R>=TabComplete("\<lt>C-N>", "\<lt>Tab>")<CR>
 inoremap <silent> <S-Tab> <C-R>=TabComplete("\<lt>C-P>", "\<lt>S-Tab>")<CR>
 
+" Automatic completion replaces |completeopt| before opening the omnicomplete
+" menu with <C-x><C-o>. In some versions of Vim, the value set for the option
+" will not be respected. If you experience issues with Vim automatically
+" inserting text while you type, set the following option in vimrc, and your
+" issues should go away.
+set completeopt=menu,menuone,preview,noselect,noinsert
+
 " Language Server functions.
 nmap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<CR><CR>
 nmap <silent> <F2> :ALEGoToDefinition<CR>
@@ -233,11 +240,23 @@ set formatoptions+=1
 
 " Make vim-commentary use C++-style comments instead of C-style comments.
 " https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
-autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
-autocmd FileType c,cpp,cs,java setlocal shiftwidth=4 tabstop=4
+autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s shiftwidth=4 tabstop=4
+
+function! ConfigureCpp()
+  let l:clang_format_config = findfile('.clang-format', expand('%:p:h') . ';')
+  if l:clang_format_config != ''
+    let b:ale_fixers = ['clang-format']
+    let b:ale_c_clangformat_options = '-assume-filename ' . expand('%:p')
+  endif
+endfunction
+
+augroup cpp
+  autocmd!
+  autocmd FileType cpp call ConfigureCpp()
+augroup END
 
 let g:ale_linters = {
-      \  'cpp': ['clangd'],
+      \  'cpp': ['ccls'],
       \}
 let g:ale_fixers = {
       \  'cpp': [],

@@ -1,5 +1,7 @@
 [alias]
   au = add --update .
+  b = branch
+  ba = branch --all
   ca = commit --amend
   cm = commit --message
   co = checkout

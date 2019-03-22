@@ -404,3 +404,20 @@ let g:rainbow_conf = {
   \ 'ctermfgs':
     \ ['lightmagenta', 'lightblue', 'lightgreen', 'lightyellow', 'lightred']
   \}
+
+
+" Projects
+" ========
+
+" Let me override Vim settings within a project by searching for a `vimrc`.
+function! ConfigureVim()
+  let l:project_vimrc = findfile('vimrc', expand('%:p:h') . ';')
+  if l:project_vimrc != ''
+    exec 'source ' . l:project_vimrc
+  endif
+endfunction
+
+augroup vimrc
+  autocmd!
+  autocmd BufRead * call ConfigureVim()
+augroup END

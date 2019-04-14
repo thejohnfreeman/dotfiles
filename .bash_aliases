@@ -11,7 +11,8 @@ xcp() {
 }
 
 mount_shared() {
-  sudo mount --types vboxsf shared ~/shared
+  # https://communities.vmware.com/thread/577218
+  sudo vmhgfs-fuse -o nonempty -o allow_other .host:/shared $HOME/shared
 }
 
 watch() {

@@ -266,7 +266,7 @@ augroup cpp
 augroup END
 
 let g:ale_linters = {
-      \  'cpp': ['ccls'],
+      \  'cpp': ['clangd'],
       \}
 let g:ale_fixers = {
       \  'cpp': [],

@@ -21,6 +21,7 @@ then
   export PATH="$HOME/.local/bin:$PATH"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+  source "$HOME/.poetry/env"
 fi
 
 # Remove group write and other read/write permissions.

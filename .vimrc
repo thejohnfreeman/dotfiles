@@ -51,6 +51,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 " Lightweight, orthogonal status line.
 Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 " Almost a GUI for Git.
 Plug 'tpope/vim-fugitive'
 " TRIAL: A better file explorer.
@@ -267,14 +268,21 @@ augroup END
 
 let g:ale_linters = {
       \  'cpp': ['clangd'],
+      \  'python': ['pyls', 'pylint'],
       \}
 let g:ale_fixers = {
       \  'cpp': [],
       \  'css': ['prettier'],
       \  'javascript': ['prettier'],
+      \  'python': ['yapf'],
       \  'typescript': ['prettier'],
       \}
 let g:ale_fix_on_save = 1
+
+let g:ale_python_pylint_executable = 'poetry'
+let g:ale_python_pylint_options = 'run pylint'
+let g:ale_python_yapf_executable = 'poetry'
+let g:ale_python_yapf_options = 'run yapf'
 
 
 " Search
@@ -397,7 +405,42 @@ let g:rainbow_active = 1
 let g:lightline = {
   \ 'colorscheme': 'seoul256',
   \ 'inactive': { 'left': [['relativepath', 'modified']] },
-  \ 'active': { 'left': [['mode'], ['relativepath', 'modified']] },
+  \ }
+
+let g:lightline.component_expand = {
+  \ 'linter_checking': 'lightline#ale#checking',
+  \ 'linter_warnings': 'lightline#ale#warnings',
+  \ 'linter_errors': 'lightline#ale#errors',
+  \ 'linter_ok': 'lightline#ale#ok',
+  \ }
+
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071 "
+let g:lightline#ale#indicator_errors = "\uf05e "
+let g:lightline#ale#indicator_ok = "\uf00c "
+
+" let g:lightline#ale#indicator_checking = "..."
+" let g:lightline#ale#indicator_warnings = "? "
+" let g:lightline#ale#indicator_errors = "! "
+
+let g:lightline.component_type = {
+  \ 'linter_checking': 'left',
+  \ 'linter_warnings': 'warning',
+  \ 'linter_errors': 'error',
+  \ 'linter_ok': 'left',
+  \ }
+
+let g:lightline.active = {
+  \ 'left': [
+  \   ['mode'],
+  \   ['relativepath', 'modified'],
+  \   ['linter_checking', 'linter_errors', 'linter_warnings'],
+  \ ],
+  \ 'right': [
+  \   ['lineinfo'],
+  \   ['percent'],
+  \   ['fileformat', 'fileencoding', 'filetype'],
+  \ ],
   \ }
 
 let g:rainbow_conf = {

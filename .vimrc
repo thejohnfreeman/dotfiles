@@ -20,6 +20,8 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-repeat'
 " [q / ]q = prev / next quickfix.
 Plug 'tpope/vim-unimpaired'
+" Text objects for parameters/arguments.
+Plug 'wellle/targets.vim'
 " ALL the color schemes!
 Plug 'flazz/vim-colorschemes'
 " Color-code matching delimiters.

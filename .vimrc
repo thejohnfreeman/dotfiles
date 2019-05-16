@@ -21,7 +21,7 @@ Plug 'tpope/vim-repeat'
 " [q / ]q = prev / next quickfix.
 Plug 'tpope/vim-unimpaired'
 " Text objects for parameters/arguments.
-Plug 'wellle/targets.vim'
+" Plug 'wellle/targets.vim'
 " ALL the color schemes!
 Plug 'flazz/vim-colorschemes'
 " Color-code matching delimiters.
@@ -64,6 +64,12 @@ Plug 'jpalardy/vim-slime'
 Plug 'mileszs/ack.vim'
 " Asynchronous Lint Engine.
 Plug 'w0rp/ale'
+" Language Server Client.
+" Plug 'natebosch/vim-lsc'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Mark diff in the gutter.
 Plug 'mhinz/vim-signify'
 call plug#end()
@@ -78,6 +84,7 @@ call plug#end()
 " TODO: rstacruz/sparkup OR emmetio/emmet (HTML completion and editing)
 " TODO: xolox/vim-session
 " TODO: rbong/flog
+" TODO: ajh17/VimCompletesMe
 
 
 " Be quiet.
@@ -108,12 +115,6 @@ nnoremap <Leader>q :q<CR>
 " Format paragraph.
 nnoremap <Leader>= gqap
 
-" Step through errors from ALE.
-nmap <silent> [e <Plug>(ale_previous_wrap)
-nmap <silent> ]e <Plug>(ale_next_wrap)
-" Protect these mappings from vim-unimpaired.
-let g:nremap = {"[e": "", "]e": ""}
-
 " Return true if all the characters to the left of the cursor are whitespace.
 function! CursorAfterOnlyWhitespace()
   return strcharpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
@@ -135,18 +136,55 @@ endfunction
 inoremap <silent> <Tab> <C-R>=TabComplete("\<lt>C-N>", "\<lt>Tab>")<CR>
 inoremap <silent> <S-Tab> <C-R>=TabComplete("\<lt>C-P>", "\<lt>S-Tab>")<CR>
 
-" Automatic completion replaces |completeopt| before opening the omnicomplete
-" menu with <C-x><C-o>. In some versions of Vim, the value set for the option
-" will not be respected. If you experience issues with Vim automatically
-" inserting text while you type, set the following option in vimrc, and your
-" issues should go away.
-set completeopt=menu,menuone,preview,noselect,noinsert
+" Use the popup menu for insert-mode completions.
+set completeopt=menu
+" Use the popup menu even when there is only one match.
+set completeopt+=menuone
+" Show extra information about the completion in the preview window.
+set completeopt+=preview
+" Do not insert text for a match until one is selected.
+set completeopt+=noselect
+" Do not automatically select a match in the menu.
+set completeopt+=noinsert
 
-" Language Server functions.
+" Language Server Mappings
+" ------------------------
+
+" ALE
+" ...
 nmap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<CR><CR>
 nmap <silent> <F2> :ALEGoToDefinition<CR>
 imap <silent> <F2> <Esc><F2>
 nmap <silent> <F7> :ALEFindReferences<CR>
+" Step through errors.
+nmap <silent> [e <Plug>(ale_previous_wrap)
+nmap <silent> ]e <Plug>(ale_next_wrap)
+
+" vim-lsc
+" .......
+" nnoremap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":LSClientShowHover"<CR><CR>
+" set keywordprg=:LSClientShowHover
+" nnoremap <Leader>i :LSClientFindImplementations<CR>
+" nnoremap <Leader>r :LSClientFindReferences<CR>
+" nnoremap <F7> :LSClientFindReferences<CR>
+" nnoremap gd :LSClientGoToDefinition<CR>
+" nnoremap <F2> :LSClientGoToDefinition<CR>
+
+" vim-lsp
+" .......
+" nnoremap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":LspHover"<CR><CR>
+" set keywordprg=:LspHover
+" nnoremap <Leader>i :LspImplementation<CR>
+" nnoremap <Leader>r :LspReferences<CR>
+" nnoremap <F7> :LspReferences<CR>
+" nnoremap gd :LspDefinition<CR>
+" nnoremap <F2> :LspDefinition<CR>
+" nnoremap ]r :LspNextReference<CR>
+" nnoremap [r :LspPreviousReference<CR>
+
+" Protect these mappings from vim-unimpaired.
+let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
+
 
 " Go back with Backspace.
 nnoremap <silent> <Backspace> <C-O>
@@ -168,6 +206,23 @@ nnoremap q: :q
 command! Q q
 command! W w
 command! Wq wq
+
+
+" Language Server
+" ===============
+
+" let g:lsc_server_commands = {'c': 'clangd', 'cpp': 'clangd'}
+
+" if executable('clangd')
+"   augroup lsp_clangd
+"     autocmd!
+"     autocmd User lsp_setup call lsp#register_server({
+"         \ 'name': 'clangd',
+"         \ 'cmd': {server_info->['clangd', '-background-index']},
+"         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"         \ })
+"   augroup end
+" endif
 
 
 " Registers
@@ -281,10 +336,12 @@ let g:ale_fixers = {
       \}
 let g:ale_fix_on_save = 1
 
-let g:ale_python_pylint_executable = 'poetry'
-let g:ale_python_pylint_options = 'run pylint'
-let g:ale_python_yapf_executable = 'poetry'
-let g:ale_python_yapf_options = 'run yapf'
+" If you are using Poetry, start a shell in Poetry's virtual environment to
+" enable Python linters and fixers.
+" let g:ale_python_pylint_executable = 'poetry'
+" let g:ale_python_pylint_options = 'run pylint'
+" let g:ale_python_yapf_executable = 'poetry'
+" let g:ale_python_yapf_options = 'run yapf'
 
 
 " Search

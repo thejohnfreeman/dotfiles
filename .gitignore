@@ -1,9 +1,10 @@
-.*.sw?
+*.sw?
+.build/
+.clangd/
 .ccls-cache/
 .python-version
 .venv/
 .vscode/
-cmake-build-debug/
 compile_commands.json
 vimrc
 yarn.lock

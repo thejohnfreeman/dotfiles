@@ -115,37 +115,26 @@ nnoremap <Leader>q :q<CR>
 " Format paragraph.
 nnoremap <Leader>= gqap
 
-" Return true if all the characters to the left of the cursor are whitespace.
-function! CursorAfterOnlyWhitespace()
-  return strcharpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-endfunction
+" Go back with Backspace.
+nnoremap <silent> <Backspace> <C-O>
 
-function! TabComplete(complete, indent)
-  if pumvisible()
-    " Tab through completions.
-    return a:complete
-  endif
-  if CursorAfterOnlyWhitespace()
-    " Indent.
-    return a:indent
-  endif
-  " Find completions.
-  return "\<C-\>\<C-O>:ALEComplete\<CR>"
-endfunction
+" Enable vim-slime from insert mode.
+inoremap <silent> <C-C><C-C> <C-O>:SlimeSend<CR>
 
-inoremap <silent> <Tab> <C-R>=TabComplete("\<lt>C-N>", "\<lt>Tab>")<CR>
-inoremap <silent> <S-Tab> <C-R>=TabComplete("\<lt>C-P>", "\<lt>S-Tab>")<CR>
+" Expand and shrink visual selections.
+vmap v <Plug>(expand_region_expand)
+vmap V <Plug>(expand_region_shrink)
 
-" Use the popup menu for insert-mode completions.
-set completeopt=menu
-" Use the popup menu even when there is only one match.
-set completeopt+=menuone
-" Show extra information about the completion in the preview window.
-set completeopt+=preview
-" Do not insert text for a match until one is selected.
-set completeopt+=noselect
-" Do not automatically select a match in the menu.
-set completeopt+=noinsert
+" Make Y behave as expected.
+nnoremap Y y$
+
+" Do what I mean, not what I say.
+inoremap <F1> <Esc>
+vnoremap <F1> <Esc>
+nnoremap q: :q
+command! Q q
+command! W w
+command! Wq wq
 
 " Language Server Mappings
 " ------------------------
@@ -186,30 +175,13 @@ nmap <silent> ]e <Plug>(ale_next_wrap)
 let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
 
 
-" Go back with Backspace.
-nnoremap <silent> <Backspace> <C-O>
-
-" Enable vim-slime from insert mode.
-inoremap <silent> <C-C><C-C> <C-O>:SlimeSend<CR>
-
-" Expand and shrink visual selections.
-vmap v <Plug>(expand_region_expand)
-vmap V <Plug>(expand_region_shrink)
-
-" Make Y behave as expected.
-nnoremap Y y$
-
-" Do what I mean, not what I say.
-inoremap <F1> <Esc>
-vnoremap <F1> <Esc>
-nnoremap q: :q
-command! Q q
-command! W w
-command! Wq wq
-
-
 " Language Server
 " ===============
+
+let g:ale_linters = {
+      \  'cpp': ['clangd'],
+      \  'python': ['pyls', 'pylint'],
+      \}
 
 " let g:lsc_server_commands = {'c': 'clangd', 'cpp': 'clangd'}
 
@@ -223,6 +195,42 @@ command! Wq wq
 "         \ })
 "   augroup end
 " endif
+
+
+" Completion
+" ==========
+
+" Return true if all the characters to the left of the cursor are whitespace.
+function! CursorAfterOnlyWhitespace()
+  return strcharpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+endfunction
+
+function! TabComplete(complete, indent)
+  if pumvisible()
+    " Tab through completions.
+    return a:complete
+  endif
+  if CursorAfterOnlyWhitespace()
+    " Indent.
+    return a:indent
+  endif
+  " Find completions.
+  return "\<C-\>\<C-O>:ALEComplete\<CR>"
+endfunction
+
+inoremap <silent> <Tab> <C-R>=TabComplete("\<lt>C-N>", "\<lt>Tab>")<CR>
+inoremap <silent> <S-Tab> <C-R>=TabComplete("\<lt>C-P>", "\<lt>S-Tab>")<CR>
+
+" Use the popup menu for insert-mode completions.
+set completeopt=menu
+" Use the popup menu even when there is only one match.
+set completeopt+=menuone
+" Show extra information about the completion in the preview window.
+set completeopt+=preview
+" Do not insert text for a match until one is selected.
+set completeopt+=noselect
+" Do not automatically select a match in the menu.
+set completeopt+=noinsert
 
 
 " Registers
@@ -323,10 +331,6 @@ augroup cpp
   autocmd FileType cpp call ConfigureCpp()
 augroup END
 
-let g:ale_linters = {
-      \  'cpp': ['clangd'],
-      \  'python': ['pyls', 'pylint'],
-      \}
 let g:ale_fixers = {
       \  'cpp': [],
       \  'css': ['prettier'],

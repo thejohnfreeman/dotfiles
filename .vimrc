@@ -75,7 +75,8 @@ Plug 'mhinz/vim-signify'
 call plug#end()
 
 " DONE: typescript-vim vs yats.vim vs LanguageClient-neovim vs deoplete.nvim
-" TODO: vim-gitgutter + terminus OR vim-signify (mark diff in gutter)
+" DONE: vim-gitgutter + terminus OR vim-signify (mark diff in gutter)
+" vim-gitgutter is generally regarded as slow.
 " TODO: vim-stay (preserve buffer state)
 " TODO: Konfekt/FastFold + tmhedberg/simpylfold (fold Python)
 " TODO: twinside/vim-haskellfold
@@ -141,10 +142,10 @@ command! Wq wq
 
 " ALE
 " ...
-nmap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<CR><CR>
-nmap <silent> <F2> :ALEGoToDefinition<CR>
-imap <silent> <F2> <Esc><F2>
-nmap <silent> <F7> :ALEFindReferences<CR>
+nnoremap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<CR><CR>
+nnoremap <silent> <F2> :ALEGoToDefinition<CR>
+inoremap <silent> <F2> <Esc><F2>
+nnoremap <silent> <F7> :ALEFindReferences<CR>
 " Step through errors.
 nmap <silent> [e <Plug>(ale_previous_wrap)
 nmap <silent> ]e <Plug>(ale_next_wrap)
@@ -205,6 +206,11 @@ function! CursorAfterOnlyWhitespace()
   return strcharpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
 endfunction
 
+function! CursorAfterIdentifier()
+  " =~? is "matches regex, ignoring case"
+  return strcharpart(getline('.'), 0, col('.') - 1) =~? '[a-z_]\+[a-z0-9_]*$'
+endfunction
+
 function! TabComplete(complete, indent)
   if pumvisible()
     " Tab through completions.
@@ -214,12 +220,15 @@ function! TabComplete(complete, indent)
     " Indent.
     return a:indent
   endif
-  " Find completions.
-  return "\<C-\>\<C-O>:ALEComplete\<CR>"
+  if CursorAfterIdentifier()
+    " Find completions.
+    return "\<C-\>\<C-O>:ALEComplete\<CR>"
+  endif
+  return "\<C-\>\<C-O>:ALEHover\<CR>"
 endfunction
 
-inoremap <silent> <Tab> <C-R>=TabComplete("\<lt>C-N>", "\<lt>Tab>")<CR>
-inoremap <silent> <S-Tab> <C-R>=TabComplete("\<lt>C-P>", "\<lt>S-Tab>")<CR>
+inoremap <expr> <silent> <Tab> TabComplete("\<lt>C-N>", "\<lt>Tab>")
+inoremap <expr> <silent> <S-Tab> TabComplete("\<lt>C-P>", "<BS>")
 
 " Use the popup menu for insert-mode completions.
 set completeopt=menu

@@ -23,3 +23,5 @@
   excludesfile = ~/.gitignore
 [color]
   ui = true
+[rerere]
+  enabled = true

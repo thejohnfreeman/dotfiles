@@ -12,13 +12,21 @@
 # the whole script with a guard, but this way lets us use it as a factory
 # reset.
 
+add_to_path() {
+  if ! (echo "$PATH" | grep "$1" > /dev/null); then
+    export PATH="$1:$PATH"
+  fi
+}
+
+add_to_path "$HOME/.yarn/bin"
+add_to_path "$HOME/.pyenv/bin"
+add_to_path "$HOME/.cargo/bin"
+add_to_path "$HOME/.local/bin"
+
 # `test` returns true (0) if it is given a non-empty string.
 if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
-  export PATH="$HOME/.yarn/bin:$PATH"
-  export PATH="$HOME/.pyenv/bin:$PATH"
-  export PATH="$HOME/.local/bin:$PATH"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
   source "$HOME/.poetry/env"

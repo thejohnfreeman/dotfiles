@@ -3,6 +3,7 @@
 .clangd/
 .ccls-cache/
 .python-version
+__pycache__/
 .venv/
 .vscode/
 compile_commands.json

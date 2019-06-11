@@ -10,6 +10,7 @@
 # pads the same prefix onto the `$PATH` which grows out-of-control.
 
 source ~/.bash_aliases
+source ~/.bash_prompt
 
 # fzf will flip if this line is not in `.bashrc`, so leave it here. I've
 # checked that it plays nicely with environment variables.

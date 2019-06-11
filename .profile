@@ -61,4 +61,3 @@ if [ -n "$(echo $- | grep i)" ]; then
 fi
 
 source ~/.bashrc
-source ~/.bash_prompt

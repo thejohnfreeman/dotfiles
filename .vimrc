@@ -32,7 +32,7 @@ Plug 'jaxbot/semantic-highlight.vim'
 " Syntax files are loaded on-demand, and the list of language-specific plugins
 " is curated and regularly updated.
 Plug 'sheerun/vim-polyglot'
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'tsx'] }
 " Fuzzy search everywhere.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Remind me of register contents when I press `"`.

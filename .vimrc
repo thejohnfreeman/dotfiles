@@ -182,6 +182,7 @@ let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
 let g:ale_linters = {
       \  'cpp': ['clangd'],
       \  'python': ['pyls', 'pylint'],
+      \  'rust': ['rls'],
       \}
 
 " let g:lsc_server_commands = {'c': 'clangd', 'cpp': 'clangd'}
@@ -345,6 +346,7 @@ let g:ale_fixers = {
       \  'css': ['prettier'],
       \  'javascript': ['prettier'],
       \  'python': ['yapf'],
+      \  'rust': ['rustfmt'],
       \  'typescript': ['prettier'],
       \}
 let g:ale_fix_on_save = 1

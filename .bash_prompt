@@ -7,12 +7,12 @@ CYAN="\[\e[36m\]"
 WHITE="\[\e[37m\]"
 RESET="\[\e[0m\]"
 
-function split() {
+function array_split() {
   local SAVED_IFS="$IFS"
   IFS="$2"; SPLIT=($1); IFS="$SAVED_IFS"
 }
 
-function join() {
+function array_join() {
   local SAVED_IFS="$IFS"
   local -a array=("${!1}")
   IFS="$2"; JOIN="${array[*]}"; IFS="$SAVED_IFS"
@@ -40,13 +40,13 @@ function prompt_cwd() {
 
   # abbreviate as many path segments as necessary (excluding the last) until the
   # path fits into the allotted space
-  split $CWD "/"
+  array_split $CWD "/"
   local SEGS=(${SPLIT[*]})
   local MAX_INDEX=$(expr ${#SEGS[@]} - 1) # length minus one
   local i=1
   while [ ${#CWD} -gt $MAX_CWD_LENGTH -a $i -lt $MAX_INDEX ]; do
     SEGS[$i]=${SEGS[$i]:0:1}
-    join SEGS[@] "/"
+    array_join SEGS[@] "/"
     CWD=$JOIN
     i=$(expr $i + 1)
   done

@@ -1,3 +1,7 @@
+split() {
+  tr "${1:-:}" "\n"
+}
+
 tad() {
   local ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"

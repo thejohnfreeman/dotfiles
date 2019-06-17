@@ -12,6 +12,8 @@
 source ~/.bash_aliases
 source ~/.bash_prompt
 
+set -o vi
+
 # fzf will flip if this line is not in `.bashrc`, so leave it here. I've
 # checked that it plays nicely with environment variables.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

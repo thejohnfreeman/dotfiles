@@ -43,7 +43,6 @@ ssh-add -l > /dev/null || ssh-add
 # Remove group write and other read/write permissions.
 umask 026
 
-set -o vi
 export EDITOR=vim
 
 # Don't put duplicate lines or lines starting with space in the history.

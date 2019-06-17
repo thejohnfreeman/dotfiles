@@ -6,12 +6,12 @@ tad() {
   local ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"
   mkdir -p $d
-  (cd $d; $SHELL -l)
+  (cd $d; $SHELL)
   rm -rf $d
 }
 
 xcp() {
-  xclip -out -selection clipboard | xclip -in -selection primary
+  xclip -out -selection primary | xclip -in -selection clipboard
 }
 
 mount_shared() {
@@ -30,3 +30,4 @@ alias l='ls -F --color=auto'
 alias la='ls -AF --color=auto'
 alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'
 alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'
+alias vim='nvim'

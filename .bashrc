@@ -12,6 +12,9 @@
 source ~/.bash_aliases
 source ~/.bash_prompt
 
+# https://unix.stackexchange.com/a/217223/42063
+# Use the GNOME Keyring SSH Agent.
+
 set -o vi
 
 # fzf will flip if this line is not in `.bashrc`, so leave it here. I've

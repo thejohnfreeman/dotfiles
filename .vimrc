@@ -12,6 +12,8 @@ let g:vim_json_warnings = 0
 let g:polyglot_disabled = ['typescript', 'tsx']
 let g:ale_completion_enabled = 1
 let g:ale_set_balloons = 1
+let g:ale_set_highlights = 0
+let g:ale_set_signs = 1
 
 call plug#begin()
 " Better default settings for Vim.
@@ -149,6 +151,8 @@ nnoremap <silent> <F7> :ALEFindReferences<CR>
 " Step through errors.
 nmap <silent> [e <Plug>(ale_previous_wrap)
 nmap <silent> ]e <Plug>(ale_next_wrap)
+
+nnoremap gs :ALESymbolSearch -relative
 
 " vim-lsc
 " .......

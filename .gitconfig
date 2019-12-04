@@ -12,6 +12,7 @@
   l = log --graph --topo-order --decorate --oneline --color -10 HEAD
   lol = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' --all
   ls = ls-files
+  pending = "!f() { local r=$1; shift; git diff $(git merge-base HEAD $r) $@; }; f"
   s = status --short
   exec = "!exec "
 [user]

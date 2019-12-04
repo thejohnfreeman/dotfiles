@@ -262,16 +262,16 @@ noremap c "_c
 noremap cc "_cc
 noremap C "_C
 
-" Do not overwrite the default register when pasting over selection.
-function! RestoreRegister()
-  let @" = s:restore_reg
-  return ''
+" Do not overwrite the default register when pasting over a selection.
+function! PasteButPreserve()
+  if col('.') == col('$') - 1
+    return '"_dp'
+  else
+    return '"_dP'
+  endif
 endfunction
-function! s:Repl()
-  let s:restore_reg = @"
-  return "p@=RestoreRegister()\<cr>"
-endfunction
-vmap <silent> <expr> p <sid>Repl()
+xnoremap <expr> p PasteButPreserve()
+xnoremap <expr> P PasteButPreserve()
 
 
 " Display

@@ -39,6 +39,8 @@ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'tsx'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Remind me of register contents when I press `"`.
 Plug 'junegunn/vim-peekaboo'
+" Remind me of mark targets when I press ```.
+Plug 'Yilin-Yang/vim-markbar'
 " Expanding visual selection.
 Plug 'terryma/vim-expand-region'
 " Context-sensitive absolute and relative line numbering.
@@ -397,6 +399,9 @@ endif
 
 " Sessions & Windows
 " ==================
+
+" Put the swap file next to the opened file.
+set directory=.
 
 " Do not keep a backup file (use version control instead).
 set nobackup

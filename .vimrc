@@ -339,21 +339,15 @@ function! FormatBuffer()
   edit
 endfunction
 
-" TODO: Move this to an ftplugin directory.
 function! ConfigureCpp()
-  let l:clang_format_config = findfile('.clang-format', expand('%:p:h') . ';')
-  if l:clang_format_config != ''
-    let b:ale_fix_on_save = 0
-    " let b:ale_fixers = ['clang-format']
-    " let b:ale_c_clangformat_options = '-assume-filename ' . expand('%:p')
-    augroup format
-      autocmd!
-      " Must be nested for :edit to fire BufEnter.
-      autocmd BufWritePost,FileWritePost * nested call FormatBuffer()
-    augroup END
-  endif
+  augroup format
+    autocmd!
+    " Must be nested for :edit to fire BufEnter.
+    autocmd BufWritePost,FileWritePost * nested call FormatBuffer()
+  augroup END
 endfunction
 
+" TODO: Move this to an ftplugin directory.
 augroup cpp
   autocmd!
   autocmd FileType cpp call ConfigureCpp()

@@ -335,7 +335,7 @@ set formatoptions+=1
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s shiftwidth=4 tabstop=4
 
 function! FormatBuffer()
-  silent !git diff -U0 % | clang-format-diff -p1 | patch -p0
+  silent !git diff -U0 % | clang-format-diff -p1 -i
   edit
 endfunction
 

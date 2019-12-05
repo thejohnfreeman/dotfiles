@@ -334,11 +334,23 @@ set formatoptions+=1
 " https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s shiftwidth=4 tabstop=4
 
+function! FormatBuffer()
+  silent !git diff -U0 % | clang-format-diff -p1 | patch -p0
+  edit
+endfunction
+
+" TODO: Move this to an ftplugin directory.
 function! ConfigureCpp()
   let l:clang_format_config = findfile('.clang-format', expand('%:p:h') . ';')
   if l:clang_format_config != ''
-    let b:ale_fixers = ['clang-format']
-    let b:ale_c_clangformat_options = '-assume-filename ' . expand('%:p')
+    let b:ale_fix_on_save = 0
+    " let b:ale_fixers = ['clang-format']
+    " let b:ale_c_clangformat_options = '-assume-filename ' . expand('%:p')
+    augroup format
+      autocmd!
+      " Must be nested for :edit to fire BufEnter.
+      autocmd BufWritePost,FileWritePost * nested call FormatBuffer()
+    augroup END
   endif
 endfunction
 
@@ -417,11 +429,11 @@ set splitbelow
 autocmd VimResized * :wincmd =
 
 " Return to where we left the file (unless it is a Git commit message).
-augroup restore_mark
+augroup cursor
   autocmd!
   autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal! g'\"zzzv" |
+        \   execute "normal! g'\"zzzv" |
         \ endif
 augroup END
 

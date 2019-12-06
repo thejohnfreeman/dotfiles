@@ -24,6 +24,14 @@ sudo apt install code curl entr tmux git nodejs vim-gtk xclip yarn tree \
   silversearcher-ag stack openjdk-8-jdk gradle jq libssl-dev cmake firefox \
   zlib-dev
 
+sudo apt install clang-8 clang-format-8
+sudo update-alternatives \
+  --install /usr/bin/clang clang /usr/bin/clang-8 100 \
+  --slave /usr/bin/clang++ clang++ /usr/bin/clang++-8
+sudo update-alternatives \
+  --install /usr/bin/clang-format clang-format /usr/bin/clang-format-8 100 \
+  --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-8
+
 # https://github.com/pyenv/pyenv-installer
 curl https://pyenv.run | bash
 # https://github.com/pyenv/pyenv/wiki/Common-build-problems

@@ -27,8 +27,10 @@ xls() {
 }
 
 mount_shared() {
+  local name=${1:-shared}
+  mkdir --parents ${HOME}/${name}
   # https://communities.vmware.com/thread/577218
-  sudo vmhgfs-fuse -o nonempty -o allow_other .host:/shared $HOME/shared
+  sudo vmhgfs-fuse -o nonempty -o allow_other .host:/${name} ${HOME}/${name}
 }
 
 watch() {

@@ -10,8 +10,20 @@ tad() {
   rm -rf $d
 }
 
-xcp() {
+xout() {
   xclip -out -selection primary | xclip -in -selection clipboard
+}
+
+xin() {
+  xclip -out -selection clipboard | xclip -in -selection primary
+}
+
+xls() {
+  for b in primary secondary clipboard; do
+    echo -n "$b ";
+    xclip -out -selection $b;
+    echo;
+  done
 }
 
 mount_shared() {

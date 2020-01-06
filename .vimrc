@@ -69,11 +69,10 @@ Plug 'mileszs/ack.vim'
 " Asynchronous Lint Engine.
 Plug 'w0rp/ale'
 " Language Server Client.
-" Plug 'natebosch/vim-lsc'
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Mark diff in the gutter.
 Plug 'mhinz/vim-signify'
 call plug#end()
@@ -144,39 +143,20 @@ command! Wq wq
 " Language Server Mappings
 " ------------------------
 
-" ALE
-" ...
-nnoremap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":ALEHover"<CR><CR>
-nnoremap <silent> <F2> :ALEGoToDefinition<CR>
-inoremap <silent> <F2> <Esc><F2>
-nnoremap <silent> <F7> :ALEFindReferences<CR>
-" Step through errors.
-nmap <silent> [e <Plug>(ale_previous_wrap)
-nmap <silent> ]e <Plug>(ale_next_wrap)
-
-nnoremap gs :ALESymbolSearch -relative
-
-" vim-lsc
-" .......
-" nnoremap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":LSClientShowHover"<CR><CR>
-" set keywordprg=:LSClientShowHover
-" nnoremap <Leader>i :LSClientFindImplementations<CR>
-" nnoremap <Leader>r :LSClientFindReferences<CR>
-" nnoremap <F7> :LSClientFindReferences<CR>
-" nnoremap gd :LSClientGoToDefinition<CR>
-" nnoremap <F2> :LSClientGoToDefinition<CR>
-
 " vim-lsp
 " .......
-" nnoremap <silent> <F1> @=getwinvar(winnr() + 1, "&previewwindow") ? ":pclose" : ":LspHover"<CR><CR>
-" set keywordprg=:LspHover
-" nnoremap <Leader>i :LspImplementation<CR>
-" nnoremap <Leader>r :LspReferences<CR>
-" nnoremap <F7> :LspReferences<CR>
-" nnoremap gd :LspDefinition<CR>
-" nnoremap <F2> :LspDefinition<CR>
-" nnoremap ]r :LspNextReference<CR>
-" nnoremap [r :LspPreviousReference<CR>
+
+nnoremap <silent> <F1> 
+  \ @=getwinvar(winnr() + 1, "&previewwindow")
+  \ ? ":pclose" : ":LspHover"<CR><CR>
+set keywordprg=:LspHover
+nnoremap <Leader>i :LspImplementation<CR>
+nnoremap <Leader>r :LspReferences<CR>
+nnoremap <F7>      :LspReferences<CR>
+nnoremap gd        :LspDefinition<CR>
+nnoremap <F2>      :LspTypeDefinition<CR>
+nnoremap ]r        :LspNextReference<CR>
+nnoremap [r        :LspPreviousReference<CR>
 
 " Protect these mappings from vim-unimpaired.
 let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
@@ -185,24 +165,32 @@ let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
 " Language Server
 " ===============
 
-let g:ale_linters = {
-      \  'cpp': ['clangd'],
-      \  'python': ['pyls', 'pylint'],
-      \  'rust': ['rls'],
-      \}
+" https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Clangd
+if executable('clangd')
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd', '-background-index']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
 
-" let g:lsc_server_commands = {'c': 'clangd', 'cpp': 'clangd'}
+" https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Python
+if executable('pyls')
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
 
-" if executable('clangd')
-"   augroup lsp_clangd
-"     autocmd!
-"     autocmd User lsp_setup call lsp#register_server({
-"         \ 'name': 'clangd',
-"         \ 'cmd': {server_info->['clangd', '-background-index']},
-"         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-"         \ })
-"   augroup end
-" endif
+if executable('rls')
+  autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
 
 
 " Completion
@@ -218,24 +206,13 @@ function! CursorAfterIdentifier()
   return strcharpart(getline('.'), 0, col('.') - 1) =~? '[a-z_]\+[a-z0-9_]*$'
 endfunction
 
-function! TabComplete(complete, indent)
-  if pumvisible()
-    " Tab through completions.
-    return a:complete
-  endif
-  if CursorAfterOnlyWhitespace()
-    " Indent.
-    return a:indent
-  endif
-  if CursorAfterIdentifier()
-    " Find completions.
-    return "\<C-\>\<C-O>:ALEComplete\<CR>"
-  endif
-  return "\<C-\>\<C-O>:ALEHover\<CR>"
-endfunction
-
-inoremap <expr> <silent> <Tab> TabComplete("\<lt>C-N>", "\<lt>Tab>")
-inoremap <expr> <silent> <S-Tab> TabComplete("\<lt>C-P>", "<BS>")
+" let g:asyncomplete_auto_popup = 0
+inoremap <expr> <silent> <Tab>
+  \ pumvisible() ? "\<C-n>" :
+  \ CursorAfterOnlyWhitespace() ? "\<Tab>" :
+  \ asyncomplete#force_refresh()
+inoremap <expr> <silent> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+inoremap <expr> <silent> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Use the popup menu for insert-mode completions.
 set completeopt=menu
@@ -543,10 +520,11 @@ let g:rainbow_conf = {
 
 " Let me override Vim settings within a project by searching for a `vimrc`.
 function! ConfigureVim()
-  let l:project_vimrc = findfile('vimrc', expand('%:p:h') . ';')
-  if l:project_vimrc != ''
+  try
+    let l:project_vimrc = findfile('vimrc', expand('%:p:h') . ';')
     exec 'source ' . l:project_vimrc
-  endif
+  catch
+  endtry
 endfunction
 
 augroup vimrc

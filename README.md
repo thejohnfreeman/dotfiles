@@ -3,6 +3,7 @@
 ```
 export GIT_DIR=$HOME/.files
 git init --bare
+git config --local status.showUntrackedFiles no
 git remote add origin git@github.com:thejohnfreeman/dotfiles.git
 git fetch
 git --work-tree=$HOME checkout --force ubuntu
@@ -20,11 +21,4 @@ git --work-tree=$HOME checkout --force ubuntu
 ## Acknowledgments
 
 - [The best way to store your dotfiles: A bare Git repository](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/)
-
-  ```
-  git init --bare $HOME/.files
-  alias config='git --git-dir=$HOME/.files --work-tree=$HOME'
-  config config --local status.showUntrackedFiles no
-  ```
-
 - [How to git clone into an existing, non-empty directory](https://stackoverflow.com/a/33695754)

@@ -61,4 +61,10 @@ stack setup
 stack install ghc-mod hlint
 stack install --resolver nightly hindent
 
+# Enable support for Yubikey in Firefox
+# https://docs.01.org/clearlinux/latest/tutorials/yubikey-u2f.html
+curl -O https://raw.githubusercontent.com/Yubico/libu2f-host/master/70-u2f.rules
+sudo mv 70-u2f.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules && sudo udevadm trigger
+
 # Restart

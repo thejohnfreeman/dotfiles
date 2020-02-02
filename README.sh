@@ -67,4 +67,12 @@ curl -O https://raw.githubusercontent.com/Yubico/libu2f-host/master/70-u2f.rules
 sudo mv 70-u2f.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && sudo udevadm trigger
 
+sudo apt install libcairo2-dev libgirepository1.0-dev libpgpme-dev
+pip install pycairo
+pip install pygobject
+pip install gpg
+sudo apt install dropbox
+dropbox update
+dropbox start
+
 # Restart

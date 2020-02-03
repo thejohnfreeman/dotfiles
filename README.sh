@@ -16,13 +16,13 @@ curl --fail --location --output ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 vim +PlugInstall +qa
 
-sudo apt install clang-8 clang-format-8
+sudo apt install clang-9 clang-format-9
 sudo update-alternatives \
-  --install /usr/bin/clang clang /usr/bin/clang-8 100 \
-  --slave /usr/bin/clang++ clang++ /usr/bin/clang++-8
+  --install /usr/bin/clang clang /usr/bin/clang-9 100 \
+  --slave /usr/bin/clang++ clang++ /usr/bin/clang++-9
 sudo update-alternatives \
-  --install /usr/bin/clang-format clang-format /usr/bin/clang-format-8 100 \
-  --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-8
+  --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100 \
+  --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-9
 
 # https://github.com/pyenv/pyenv-installer
 curl https://pyenv.run | bash

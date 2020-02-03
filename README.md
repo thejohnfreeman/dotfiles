@@ -36,10 +36,11 @@ git fetch
 git --work-tree=$HOME checkout --force ubuntu
 ```
 
-- Settle in and script the rest.
+- Log out to update your PATH.
+
+- Script the rest.
 
 ```
-source .bash_aliases
 ./README.sh
 ```
 

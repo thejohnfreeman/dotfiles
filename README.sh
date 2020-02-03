@@ -4,15 +4,17 @@ curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 # https://yarnpkg.com/lang/en/docs/install/#debian-stable
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-# KitWare makes CMake.
-# https://apt.kitware.com/
-wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
-sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+# KitWare makes CMake, but their PPA only publishes for LTS releases.
 
 sudo apt install apt-transport-https
 sudo apt update
 sudo apt install curl entr tmux git nodejs neovim yarn tree \
-  silversearcher-ag jq libssl-dev cmake zlib-dev
+  silversearcher-ag jq libssl-dev cmake
+
+# Install vim plugins
+curl --fail --location --output ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim +PlugInstall +qa
 
 sudo apt install clang-8 clang-format-8
 sudo update-alternatives \
@@ -30,18 +32,9 @@ sudo apt-get install make build-essential libssl-dev zlib1g-dev libbz2-dev \
   libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
 pyenv install 3.7.1
 pyenv global 3.7.1
+pip install --upgrade pip
 
-# Install vim plugins
-curl --fail --location --output ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim +PlugInstall +qa
-
-sudo apt install libcairo2-dev libgirepository1.0-dev libpgpme-dev
-pip install pycairo
-pip install pygobject
-pip install gpg
-sudo apt install dropbox
-dropbox update
-dropbox start
+# https://python-poetry.org/docs/#installation
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
 # Restart

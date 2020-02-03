@@ -24,6 +24,7 @@ add_to_path "$HOME/.cargo/bin"
 add_to_path "$HOME/.local/bin"
 
 # `test` returns true (0) if it is given a non-empty string.
+# ${variable+value} returns `value` if `parameter` is set to anything.
 if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=

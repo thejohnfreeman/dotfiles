@@ -37,4 +37,11 @@ pip install --upgrade pip
 # https://python-poetry.org/docs/#installation
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
+# Install dependencies for Dropbox
+sudo apt install libcairo2-dev libgirepository1.0-dev libgpgme-dev swig
+pip install pycairo
+pip install pygobject
+pip install gpg
+# https://www.dropbox.com/install-linux
+
 # Restart

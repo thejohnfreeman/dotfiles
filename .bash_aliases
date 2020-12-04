@@ -1,7 +1,33 @@
+# docker-build-run
+# https://jfreeman.dev/blog/2020/02/10/how-to-initialize-a-docker-container-without-building-an-image/
+# Start an interactive shell in a container initialized from a script.
+dbr() {
+  image="${1:-ubuntu:xenial}"
+  script="${2:-entrypoint.sh}"
+  sudo docker run --rm --interactive --tty --volume "$PWD:/entrypoint" \
+    --entrypoint "/entrypoint/${script}" "${image}"
+}
+
+# github-pages
+ghpages() {
+  origin="git@github.com:thejohnfreeman/rippled.git"
+  echo -n "origin? [${origin}] "
+  read answer
+  origin="${answer:-${origin}}"
+  git init
+  git remote add origin "${origin}"
+  git fetch --depth 1 origin gh-pages
+  git reset --soft origin/gh-pages
+  git add .
+  git commit
+  git push origin master:gh-pages
+}
+
 split() {
   tr "${1:-:}" "\n"
 }
 
+# throw-away-directory
 tad() {
   local ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"
@@ -45,3 +71,4 @@ alias la='ls -AF --color=auto'
 alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'
 alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'
 alias vim='nvim'
+alias cupcake='~/code/cupcake/.venv/bin/cupcake'

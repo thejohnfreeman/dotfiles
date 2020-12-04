@@ -9,10 +9,10 @@
   cum = commit --only . --message
   d = diff --stat
   dc = diff --cached
-  l = log --graph --topo-order --decorate --oneline --color -10 HEAD
-  lol = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' --all
+  l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' -10 HEAD
   ls = ls-files
   pending = "!f() { local r=$1; shift; git diff $(git merge-base HEAD $r) $@; }; f"
+  rc = rebase --continue
   s = status --short
   exec = "!exec "
 [user]

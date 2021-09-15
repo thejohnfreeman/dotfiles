@@ -20,7 +20,6 @@ add_to_path() {
 
 add_to_path "$HOME/.yarn/bin"
 add_to_path "$HOME/.pyenv/bin"
-add_to_path "$HOME/.cargo/bin"
 add_to_path "$HOME/.local/bin"
 
 # `test` returns true (0) if it is given a non-empty string.
@@ -28,10 +27,12 @@ add_to_path "$HOME/.local/bin"
 if ! test ${DO_NOT_EXPORT+true}
 then
   export DO_NOT_EXPORT=
-  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
   eval "$(pyenv virtualenv-init -)"
   source "$HOME/.poetry/env"
 fi
+
+source "$HOME/.cargo/env"
 
 # Remove group write and other read/write permissions.
 umask 026

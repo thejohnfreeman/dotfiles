@@ -10,6 +10,7 @@
   d = diff --stat
   dc = diff --cached
   l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' -10 HEAD
+  lol = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset'
   ls = ls-files
   pending = "!f() { local r=$1; shift; git diff $(git merge-base HEAD $r) $@; }; f"
   rc = rebase --continue
@@ -24,9 +25,11 @@
   excludesfile = ~/.gitignore
 [color]
   ui = true
-[rerere]
-  enabled = true
+; [rerere]
+;   enabled = true
 [merge]
   ff = false
 [pull]
   ff = only
+[init]
+  defaultBranch = master

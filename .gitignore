@@ -9,3 +9,6 @@ __pycache__/
 compile_commands.json
 vimrc
 yarn.lock
+.ipynb_checkpoints/
+.yarn/
+.yarnrc.yml

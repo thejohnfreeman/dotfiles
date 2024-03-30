@@ -29,7 +29,6 @@ then
   export DO_NOT_EXPORT=
   eval "$(pyenv init --path)"
   eval "$(pyenv virtualenv-init -)"
-  source "$HOME/.poetry/env"
 fi
 
 source "$HOME/.cargo/env"

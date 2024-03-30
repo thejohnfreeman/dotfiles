@@ -1,16 +1,39 @@
-# Install packages
+# Install packages.
 # KitWare makes CMake, but their PPA only publishes for LTS releases.
-
 sudo apt install apt-transport-https
 sudo apt update
-sudo apt install curl entr tmux git nodejs npm neovim tree \
-  silversearcher-ag jq libssl-dev cmake ninja docker.io
+packages=(
+  cmake
+  curl
+  docker.io
+  entr
+  git
+  jq
+  kitty
+  libssl-dev
+  neovim
+  ninja
+  nodejs
+  npm
+  silversearcher-ag
+  tmux
+  tree
+  xclip
+)
+sudo apt install ${packages[@]}
 
-# Install vim plugins
+# Add u2f rules.
+# https://docs.01.org/clearlinux/latest/tutorials/yubikey-u2f.html
+curl -O https://raw.githubusercontent.com/Yubico/libu2f-host/master/70-u2f.rules
+sudo mv 70-u2f.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules && sudo udevadm trigger
+
+# Install Vim plugins.
 curl --fail --location --output ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 vim +PlugInstall +qa
 
+# Install Clang.
 v=17
 sudo apt install clang-${v} clang-format-${v} clangd-${v}
 sudo update-alternatives \
@@ -23,6 +46,7 @@ sudo update-alternatives \
 sudo update-alternatives \
   --install /usr/bin/clangd clangd /usr/bin/clangd-${v} 100
 
+# Install Python.
 # https://github.com/pyenv/pyenv-installer
 curl https://pyenv.run | bash
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
@@ -38,11 +62,16 @@ pip install 'conan<2'
 # https://python-poetry.org/docs/#installation
 curl -sSL https://install.python-poetry.org | python3 -
 
-# Install dependencies for Dropbox
+# Install dependencies for Dropbox.
 sudo apt install libcairo2-dev libgirepository1.0-dev libgpgme-dev swig
 pip install pycairo
 pip install pygobject
 pip install gpg
 # https://www.dropbox.com/install-linux
+
+# Create an SSH key for this machine. Never copy the private half anywhere.
+ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
 
 # Restart

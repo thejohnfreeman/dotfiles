@@ -1,23 +1,15 @@
 ## Installation
 
-- Add [u2f rules](https://docs.01.org/clearlinux/latest/tutorials/yubikey-u2f.html):
+- Bootstrap.
 
 ```
-sudo apt install curl git
-curl -O https://raw.githubusercontent.com/Yubico/libu2f-host/master/70-u2f.rules
-sudo mv 70-u2f.rules /etc/udev/rules.d/
-sudo udevadm control --reload-rules && sudo udevadm trigger
+sudo apt update
+sudo apt install curl
+curl -LO https://github.com/thejohnfreeman/dotfiles/raw/ubuntu/README.sh
+source README.sh
 ```
 
 - Install the [Bitwarden addon for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/) and log in.
-
-- Create an SSH key for this machine. Never copy the private half anywhere.
-
-```
-ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)"
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-```
 
 - Log in to GitHub and [add your SSH key](https://github.com/settings/keys):
 
@@ -37,12 +29,6 @@ git --work-tree=$HOME checkout --force ubuntu
 ```
 
 - Log out to update your PATH.
-
-- Script the rest.
-
-```
-./README.sh
-```
 
 - [Create a GPG key for this machine.](https://superuser.com/questions/466396/how-to-manage-gpg-keys-across-multiple-systems)
 

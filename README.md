@@ -9,7 +9,7 @@ sudo mv 70-u2f.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && sudo udevadm trigger
 ```
 
-- Install the [LastPass addon for Firefox](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/) and log in.
+- Install the [Bitwarden addon for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/) and log in.
 
 - Create an SSH key for this machine. Never copy the private half anywhere.
 
@@ -44,14 +44,7 @@ git --work-tree=$HOME checkout --force ubuntu
 ./README.sh
 ```
 
-- [Base16 Gnome Terminal](https://github.com/aaron-williamson/base16-gnome-terminal)
-
-  ```
-  git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
-  ~/.config/base16-gnome-terminal/color-scripts/base16-tomorrow-night-256.sh
-  ```
-
-  Then select new profile in preferences and restart terminal.
+- [Create a GPG key for this machine.](https://superuser.com/questions/466396/how-to-manage-gpg-keys-across-multiple-systems)
 
 ## Acknowledgments
 

@@ -1,25 +1,17 @@
 # Install packages
-# https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-# https://yarnpkg.com/lang/en/docs/install/#debian-stable
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 # KitWare makes CMake, but their PPA only publishes for LTS releases.
 
 sudo apt install apt-transport-https
 sudo apt update
-sudo apt install curl entr tmux git nodejs neovim yarn tree \
-  silversearcher-ag jq libssl-dev cmake nordvpn wireguard
-
-# Configure VPN
-nordvpn set technology NordLynx
+sudo apt install curl entr tmux git nodejs npm neovim tree \
+  silversearcher-ag jq libssl-dev cmake ninja docker.io
 
 # Install vim plugins
 curl --fail --location --output ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 vim +PlugInstall +qa
 
-v=10
+v=17
 sudo apt install clang-${v} clang-format-${v} clangd-${v}
 sudo update-alternatives \
   --install /usr/bin/clang clang /usr/bin/clang-${v} 100 \
@@ -33,16 +25,18 @@ sudo update-alternatives \
 
 # https://github.com/pyenv/pyenv-installer
 curl https://pyenv.run | bash
-# https://github.com/pyenv/pyenv/wiki/Common-build-problems
+# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 sudo apt-get install make build-essential libssl-dev zlib1g-dev libbz2-dev \
   libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
   libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
-pyenv install 3.7.1
-pyenv global 3.7.1
+pyenv install 3.12
+pyenv global 3.12
 pip install --upgrade pip
 
+pip install 'conan<2'
+
 # https://python-poetry.org/docs/#installation
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+curl -sSL https://install.python-poetry.org | python3 -
 
 # Install dependencies for Dropbox
 sudo apt install libcairo2-dev libgirepository1.0-dev libgpgme-dev swig

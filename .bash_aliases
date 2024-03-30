@@ -1,11 +1,17 @@
-# docker-build-run
 # https://jfreeman.dev/blog/2020/02/10/how-to-initialize-a-docker-container-without-building-an-image/
-# Start an interactive shell in a container initialized from a script.
-dbr() {
-  image="${1:-ubuntu:xenial}"
-  script="${2:-entrypoint.sh}"
-  sudo docker run --rm --interactive --tty --volume "$PWD:/entrypoint" \
-    --entrypoint "/entrypoint/${script}" "${image}"
+# Start an interactive shell in a container, set in the current directory,
+# after optional extra installation.
+#
+# dock
+# dock image:tag
+# dock image:tag install.sh
+dock() {
+  args=()
+  if [ -n "$2" ]; then
+    args+=(--volume "$(realpath ${2}):/tmp/ep.sh" --entrypoint /tmp/ep.sh)
+  fi
+  args+=("${1:-ubuntu:23.10}")
+  sudo docker run --rm --interactive --tty --volume "${PWD}:${PWD}" --workdir "${PWD}" "${args[@]}"
 }
 
 # github-pages
@@ -21,6 +27,10 @@ ghpages() {
   git add .
   git commit
   git push origin master:gh-pages
+}
+
+iname() {
+  find "${2:-.}" -iregex "[^.]*${1}.*"
 }
 
 split() {
@@ -71,4 +81,4 @@ alias la='ls -AF --color=auto'
 alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'
 alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'
 alias vim='nvim'
-alias cupcake='~/code/cupcake/.venv/bin/cupcake'
+alias cupcake='~/code/cupcake.py/.venv/bin/cupcake'

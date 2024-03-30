@@ -1,10 +1,13 @@
 *.sw?
 .build/
+.install/
 .clangd/
 .ccls-cache/
+.cupcake.toml
 .python-version
 __pycache__/
 .venv/
+poetry.lock
 .vscode/
 compile_commands.json
 vimrc
@@ -12,3 +15,5 @@ yarn.lock
 .ipynb_checkpoints/
 .yarn/
 .yarnrc.yml
+/conan.lock
+/.cache/

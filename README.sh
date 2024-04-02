@@ -70,8 +70,8 @@ pip install gpg
 # https://www.dropbox.com/install-linux
 
 # Create an SSH key for this machine. Never copy the private half anywhere.
-ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)"
+ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 
 # Restart

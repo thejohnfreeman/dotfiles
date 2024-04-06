@@ -3,8 +3,7 @@
 - Bootstrap.
 
 ```
-sudo apt update
-sudo apt install curl
+sudo pacman -Syu curl
 curl -LO https://github.com/thejohnfreeman/dotfiles/raw/ubuntu/README.sh
 source README.sh
 ```

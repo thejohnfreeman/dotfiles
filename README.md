@@ -4,7 +4,7 @@
 
 ```
 sudo pacman -Syu curl
-curl -LO https://github.com/thejohnfreeman/dotfiles/raw/ubuntu/README.sh
+curl -LO https://github.com/thejohnfreeman/dotfiles/raw/manjaro/README.sh
 source README.sh
 ```
 
@@ -13,7 +13,7 @@ source README.sh
 - Log in to GitHub and [add your SSH key](https://github.com/settings/keys):
 
 ```
-xclip -i -sel clip < ~/.ssh/id_rsa.pub
+xclip -i -sel clip < ~/.ssh/id_ed25519.pub
 ```
 
 - Check out your dotfiles.
@@ -24,10 +24,16 @@ git init --bare
 git config --local status.showUntrackedFiles no
 git remote add origin git@github.com:thejohnfreeman/dotfiles.git
 git fetch
-git --work-tree=$HOME checkout --force ubuntu
+git --work-tree=$HOME checkout --force manjaro
 ```
 
 - Log out to update your PATH.
+
+- Install Vim plugins.
+
+```
+nvim +PlugInstall +qa
+```
 
 - [Create a GPG key for this machine.](https://superuser.com/questions/466396/how-to-manage-gpg-keys-across-multiple-systems)
 

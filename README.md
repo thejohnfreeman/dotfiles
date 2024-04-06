@@ -1,10 +1,19 @@
 ## Installation
 
+- Check out your dotfiles.
+
+```
+export GIT_DIR=$HOME/.files
+git init --bare
+git config --local status.showUntrackedFiles no
+git remote add origin https://github.com/thejohnfreeman/dotfiles.git
+git fetch
+git --work-tree=$HOME checkout --force manjaro
+```
+
 - Bootstrap.
 
 ```
-sudo pacman -Syu curl
-curl -LO https://github.com/thejohnfreeman/dotfiles/raw/manjaro/README.sh
 source README.sh
 ```
 
@@ -16,26 +25,10 @@ source README.sh
 xclip -i -sel clip < ~/.ssh/id_ed25519.pub
 ```
 
-- Check out your dotfiles.
-
-```
-export GIT_DIR=$HOME/.files
-git init --bare
-git config --local status.showUntrackedFiles no
-git remote add origin git@github.com:thejohnfreeman/dotfiles.git
-git fetch
-git --work-tree=$HOME checkout --force manjaro
-```
-
 - Log out to update your PATH.
 
-- Install Vim plugins.
-
-```
-nvim +PlugInstall +qa
-```
-
 - [Create a GPG key for this machine.](https://superuser.com/questions/466396/how-to-manage-gpg-keys-across-multiple-systems)
+
 
 ## Acknowledgments
 

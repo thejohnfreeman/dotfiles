@@ -27,7 +27,13 @@ xclip -i -sel clip < ~/.ssh/id_ed25519.pub
 
 - Log out to update your PATH.
 
-- [Create a GPG key for this machine.](https://superuser.com/questions/466396/how-to-manage-gpg-keys-across-multiple-systems)
+- Copy GPG keys.
+
+```
+scp jfreeman@franklin:~/gnupg .
+rm -rf .gnupg
+mv gnupg .gnupg
+```
 
 
 ## Acknowledgments

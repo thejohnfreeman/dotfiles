@@ -1,77 +1,45 @@
 # Install packages.
-# KitWare makes CMake, but their PPA only publishes for LTS releases.
-sudo apt install apt-transport-https
-sudo apt update
 packages=(
+  clang
   cmake
   curl
-  docker.io
+  docker
   entr
   git
   jq
   kitty
-  libssl-dev
+  make
   neovim
   ninja
   nodejs
   npm
-  silversearcher-ag
+  pyenv
+  ripgrep
   tmux
   tree
   xclip
 )
-sudo apt install ${packages[@]}
+sudo pacman -Syu ${packages[@]}
 
-# Add u2f rules.
-# https://docs.01.org/clearlinux/latest/tutorials/yubikey-u2f.html
-curl -O https://raw.githubusercontent.com/Yubico/libu2f-host/master/70-u2f.rules
-sudo mv 70-u2f.rules /etc/udev/rules.d/
-sudo udevadm control --reload-rules && sudo udevadm trigger
+sudo systemctl start pcscd.service
 
 # Install Vim plugins.
 curl --fail --location --output ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim +PlugInstall +qa
-
-# Install Clang.
-v=17
-sudo apt install clang-${v} clang-format-${v} clangd-${v}
-sudo update-alternatives \
-  --install /usr/bin/clang clang /usr/bin/clang-${v} 100 \
-  --slave /usr/bin/clang++ clang++ /usr/bin/clang++-${v}
-sudo update-alternatives \
-  --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${v} 100 \
-  --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-${v} \
-  --slave /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-${v}
-sudo update-alternatives \
-  --install /usr/bin/clangd clangd /usr/bin/clangd-${v} 100
+ln --symbolic $HOME/.vim $HOME/.config/nvim
+nvim -u .vimrc +PlugInstall +qa
 
 # Install Python.
-# https://github.com/pyenv/pyenv-installer
-curl https://pyenv.run | bash
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-sudo apt-get install make build-essential libssl-dev zlib1g-dev libbz2-dev \
-  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-  libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+sudo packman -Syu --needed base-devel openssl zlib xz tk
 pyenv install 3.12
 pyenv global 3.12
+eval "$(pyenv init --path)"
 pip install --upgrade pip
 
-pip install 'conan<2'
-
-# https://python-poetry.org/docs/#installation
-curl -sSL https://install.python-poetry.org | python3 -
-
-# Install dependencies for Dropbox.
-sudo apt install libcairo2-dev libgirepository1.0-dev libgpgme-dev swig
-pip install pycairo
-pip install pygobject
-pip install gpg
-# https://www.dropbox.com/install-linux
+pip install poetry 'conan<2'
 
 # Create an SSH key for this machine. Never copy the private half anywhere.
 ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
-
-# Restart

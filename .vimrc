@@ -54,7 +54,8 @@ Plug 'tpope/vim-surround'
 " Lightweight, orthogonal status line.
 Plug 'itchyny/lightline.vim'
 " Almost a GUI for Git.
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit'
 " TRIAL: A better file explorer.
 Plug 'tpope/vim-vinegar'
 " Use tmux as a REPL.

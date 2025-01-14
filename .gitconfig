@@ -1,0 +1,51 @@
+[alias]
+  au = add --update .
+  b = branch
+  ba = branch --all
+  c = commit
+  ca = commit --amend
+  cat = cat-file -p
+  cm = commit --message
+  co = checkout
+  conflicts = !git ls-files -u | cut -f 2 | sort -u
+  cum = commit --only . --message
+  d = diff --stat
+  dc = diff --cached
+  l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' -10
+  ls = ls-files
+  pending = "!f() { local r=$1; shift; git diff $(git merge-base HEAD $r) $@; }; f"
+  rc = rebase --continue
+  s = status --short
+  exec = "!exec "
+[user]
+  email = jfreeman08@gmail.com
+  name = John Freeman
+  signingkey = FD2838F2297E3D45!
+[push]
+  default = simple
+[core]
+  excludesfile = ~/.gitignore
+[color]
+  ui = true
+; [rerere]
+;   enabled = true
+[merge]
+  ff = false
+[pull]
+  ff = only
+[init]
+  defaultBranch = master
+[help]
+  autocorrect = -1
+[color "branch"]
+  current = green reverse
+  local = cyan
+  remote = white
+[color "diff"]
+  new = brightgreen italic
+  old = red strike
+[color "status"]
+  changed = brightyellow
+  added  = brightcyan
+[commit]
+  gpgsign = true

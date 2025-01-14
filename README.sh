@@ -16,6 +16,7 @@ packages=(
   nodejs
   npm
   pyenv
+  python-pipx
   ripgrep
   tmux
   tree

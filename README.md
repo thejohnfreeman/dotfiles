@@ -11,16 +11,15 @@ sudo pamac install git
 
 ```
 export GIT_DIR=$HOME/.local/share/yadm/repo.git
-mkdir -p $(dirname ${GIT_DIR})
+mkdir -p "$(dirname "${GIT_DIR}")"
 git init --bare
 git config --local status.showUntrackedFiles no
 git config --local core.bare false
 git config --local core.worktree "${HOME}"
 git remote add origin https://github.com/thejohnfreeman/dotfiles.git
 git fetch origin yadm
-git checkout --force yadm
+git checkout --force yadm --recurse-submodules
 # Install YADM.
-git submodule update --init
 alias yadm="${HOME}/.yadm.git/yadm"
 ```
 

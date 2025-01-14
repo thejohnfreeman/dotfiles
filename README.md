@@ -11,6 +11,7 @@ sudo pamac install git
 
 ```
 export GIT_DIR=$HOME/.local/share/yadm/repo.git
+mkdir -p $(basename ${GIT_DIR})
 git init --bare
 git config --local status.showUntrackedFiles no
 git remote add origin https://github.com/thejohnfreeman/dotfiles.git

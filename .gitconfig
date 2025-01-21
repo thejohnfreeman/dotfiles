@@ -13,11 +13,13 @@
   cum = commit --only . --message
   d = diff --stat
   dc = diff --cached
+  dir = rev-parse --git-dir
   l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset %Cblue%an' -10
   ls = ls-files
   mc = merge --continue
   pending = "!f() { local r=$1; shift; git diff $(git merge-base HEAD $r) $@; }; f"
   rc = rebase --continue
+  root = rev-parse --show-toplevel
   s = status --short
   # squash <ancestor>
   squash = rebase --interactive --autosquash --update-refs

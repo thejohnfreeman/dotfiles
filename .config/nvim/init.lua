@@ -28,10 +28,6 @@ require'nvim-treesitter.configs'.setup {
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-require'treesitter-context'.setup {
-  enable = true,
-}
-
 vim.opt.updatetime = 200
 vim.api.nvim_create_autocmd("CursorHold", {
   pattern = { '*' },

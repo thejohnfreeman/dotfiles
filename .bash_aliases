@@ -1,4 +1,4 @@
-# https://jfreeman.dev/blog/2020/02/10/how-to-initialize-a-docker-container-without-building-an-image/
+# https://jfreeman.dev/blog/2020/02/10/how-to-initialize-a-docker-container-without-building-an-image
 # Start an interactive shell in a container, set in the current directory,
 # after optional extra installation.
 #
@@ -89,3 +89,6 @@ alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'
 alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'
 alias vim='nvim'
 alias cupcake='~/code/cupcake.py/.venv/bin/cupcake'
+
+export EDITOR=vim
+export GPG_TTY=$(tty)

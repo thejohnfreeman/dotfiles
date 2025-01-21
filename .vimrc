@@ -95,8 +95,6 @@ nnoremap <Leader>f :Telescope find_files<Enter>
 nnoremap <Leader>/ :Telescope live_grep<Enter>
 nnoremap <Leader>t :Telescope lsp_document_symbols<Enter>
 nnoremap <Leader>b :Telescope buffers<Enter>
-" Toggle treesitter context.
-nnoremap <Leader>c :TSContextToggle<Enter>
 " Make a Markdown link.
 vnoremap <Leader>l c[<C-R>"]()<Esc>
 " Make inline code in Markdown.

@@ -11,7 +11,14 @@ dock() {
     args+=(--volume "$(realpath ${2}):/tmp/ep.sh" --entrypoint /tmp/ep.sh)
   fi
   args+=("${1:-ubuntu:23.10}")
-  sudo docker run --rm --interactive --tty --volume "${PWD}:${PWD}" --workdir "${PWD}" "${args[@]}"
+  sudo docker run --rm --interactive --tty --net host --volume "${PWD}:${PWD}" --workdir "${PWD}" "${args[@]}"
+}
+
+nargs() {
+  for arg in "$@"; do
+    echo $arg
+  done
+  echo $#
 }
 
 # github-pages
@@ -30,7 +37,7 @@ ghpages() {
 }
 
 iname() {
-  find "${2:-.}" -iregex "[^.]*${1}.*"
+  find "${2:-.}" -iregex ".*[^.]${1}.*"
 }
 
 split() {

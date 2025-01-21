@@ -9,8 +9,6 @@ set nocompatible
 " warnings in JSON are low contrast gray-on-black.
 let g:vim_json_warnings = 0
 
-let g:polyglot_disabled = ['typescript', 'tsx']
-
 call plug#begin()
 " Better default settings for Vim.
 Plug 'tpope/vim-sensible'
@@ -21,22 +19,21 @@ Plug 'tpope/vim-unimpaired'
 " Text objects for parameters/arguments.
 " Plug 'wellle/targets.vim'
 " ALL the color schemes!
-Plug 'flazz/vim-colorschemes'
+Plug 'EvitanRelta/vim-colorschemes'
 " Color-code matching delimiters.
-Plug 'luochen1990/rainbow'
-" Highlight variables in different colors.
-Plug 'jaxbot/semantic-highlight.vim'
+Plug 'HiPhish/rainbow-delimiters.nvim'
 " ALL the languages!
-" Syntax files are loaded on-demand, and the list of language-specific plugins
-" is curated and regularly updated.
-Plug 'sheerun/vim-polyglot'
-" Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'tsx'] }
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Dim inactive code.
+" Plug 'folke/twilight.nvim'
 " Fuzzy search everywhere.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 " Remind me of register contents when I press `"`.
 Plug 'junegunn/vim-peekaboo'
 " Remind me of mark targets when I press ```.
-Plug 'Yilin-Yang/vim-markbar'
+" Plug 'Yilin-Yang/vim-markbar'
 " Expanding visual selection.
 Plug 'terryma/vim-expand-region'
 " Context-sensitive absolute and relative line numbering.
@@ -54,20 +51,11 @@ Plug 'tpope/vim-surround'
 " Lightweight, orthogonal status line.
 Plug 'itchyny/lightline.vim'
 " Almost a GUI for Git.
-" Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 " TRIAL: A better file explorer.
 Plug 'tpope/vim-vinegar'
 " Use tmux as a REPL.
 Plug 'jpalardy/vim-slime'
-" Search file contents in the quickfix list.
-Plug 'mileszs/ack.vim'
-" Language Server Client.
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'mattn/vim-lsp-settings'
 " Mark diff in the gutter.
 Plug 'mhinz/vim-signify'
 " Tag bar.
@@ -84,14 +72,11 @@ call plug#end()
 "       1. Doesn't cross blank lines.
 "       2. Doesn't play well with `cursorline`.
 " TODO: vim-stay (preserve buffer state)
-" TODO: Konfekt/FastFold + tmhedberg/simpylfold (fold Python)
-" TODO: twinside/vim-haskellfold
 " TODO: majutsushi/tagbar OR liuchengxu/vista.vim
 " TODO: kana/vim-textobj-user ("argument" text objects?)
 " TODO: rstacruz/sparkup OR emmetio/emmet (HTML completion and editing)
 " TODO: xolox/vim-session
 " TODO: rbong/flog
-" TODO: ajh17/VimCompletesMe
 " TODO: vim-autoformat/vim-autoformat
 
 
@@ -105,9 +90,13 @@ set visualbell
 " Space is your <Leader>.
 " https://github.com/sheerun/blog/blob/master/_posts/2014-03-21-how-to-boost-your-vim-productivity.markdown
 let mapleader=' '
-nnoremap <Leader>/ :Ack!
-" Fuzzy search for a file.
-nnoremap <Leader>f :FZF<Enter>
+" Fuzzy searches.
+nnoremap <Leader>f :Telescope find_files<Enter>
+nnoremap <Leader>/ :Telescope live_grep<Enter>
+nnoremap <Leader>t :Telescope lsp_document_symbols<Enter>
+nnoremap <Leader>b :Telescope buffers<Enter>
+" Toggle treesitter context.
+nnoremap <Leader>c :TSContextToggle<Enter>
 " Make a Markdown link.
 vnoremap <Leader>l c[<C-R>"]()<Esc>
 " Make inline code in Markdown.
@@ -116,21 +105,25 @@ nnoremap <Leader>` ysiw`
 " Make bold text in Markdown.
 vnoremap <Leader>8 c**<C-R>"**<Esc>
 nnoremap <Leader>8 ysiw*l.
-" Search tags.
-nnoremap <Leader>t :Vista finder fzf:vim_lsp<Enter>
 " Save.
 nnoremap <Leader>w :w<Enter>
 " Quit.
 nnoremap <Leader>q :q<Enter>
 " Format paragraph.
 nnoremap <Leader>= gqap
+" Close distractions.
+nnoremap <Leader><Leader> :cclose<Enter>:lclose<Enter>:pclose<Enter>:noh<Enter>
 
-nnoremap q] :cnext<Enter>
-nnoremap q[ :cprev<Enter>
+nnoremap ]q :cnext<Enter>
+nnoremap [q :cprev<Enter>
+nnoremap ]l :lnext<Enter>
+nnoremap [l :lprev<Enter>
+nnoremap <Down> :lnext<Enter>
+nnoremap <Up>   :lprev<Enter>
 
 " Make Escape work in terminal mode.
 " https://vi.stackexchange.com/a/4922/1176
-:tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
 " More memorable navigation.
 nnoremap <silent> <Backspace> <C-O>
@@ -161,119 +154,15 @@ command! Wq wq
 " Language Server Mappings
 " ------------------------
 
-" vim-lsp
-" .......
-
-nnoremap <silent> <F1>
-  \ @=getwinvar(winnr() + 1, "&previewwindow")
-  \ ? ":pclose" : ":LspHover"<Enter><Enter>
-set keywordprg=:LspHover
-nmap <Leader>d <Plug>(lsp-definition)
-nmap <Leader>r <Plug>(lsp-references)
-nmap <F7>      <Plug>(lsp-references)
-nmap gd        <Plug>(lsp-definition)
-nmap gD        <Plug>(lsp-peek-definition)
-nmap <F2>      <Plug>(lsp-rename)
-nmap ]d        <Plug>(lsp-next-diagnostic)
-nmap [d        <Plug>(lsp-previous-diagnostic)
-nmap ]e        <Plug>(lsp-next-error)
-nmap [e        <Plug>(lsp-previous-error)
-nmap ]w        <Plug>(lsp-next-warning)
-nmap [w        <Plug>(lsp-previous-warning)
-nmap ]r        <Plug>(lsp-next-reference)
-nmap [r        <Plug>(lsp-previous-reference)
-
 " Protect these mappings from vim-unimpaired.
 let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
-
-
-" Language Server
-" ===============
-
-" let g:lsp_signs_error = {'text': '✗'}
-" let g:lsp_signs_warning = {'text': '⚠'}
-let g:lsp_highlight_references_enabled = 1
-let g:lsp_diagnostics_enabled = 0
-
-" https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Clangd
-if executable('clangd')
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd', '--background-index']},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \ })
-endif
-
-" https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Python
-if executable('pyls')
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ })
-endif
-
-if executable('rls')
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
-        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-        \ 'whitelist': ['rust'],
-        \ })
-endif
-
-if executable('typescript-language-server')
-  autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx'],
-        \ })
-endif
-
-function! s:on_lsp_buffer_enabled() abort
-    " setlocal omnifunc=lsp#complete
-    " setlocal signcolumn=yes
-endfunction
-
-augroup lsp_install
-    autocmd!
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-
-augroup lsp_folding
-  autocmd!
-  autocmd FileType javascript setlocal
-        \ foldmethod=expr
-        \ foldlevel=99
-        \ foldexpr=lsp#ui#vim#folding#foldexpr()
-        \ foldtext=lsp#ui#vim#folding#foldtext()
-augroup end
-
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('vim-lsp.log')
-
 
 " Completion
 " ==========
 
-" Return true if all the characters to the left of the cursor are whitespace.
-function! CursorAfterOnlyWhitespace()
-  return strcharpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-endfunction
-
-function! CursorAfterIdentifier()
-  " =~? is "matches regex, ignoring case"
-  return strcharpart(getline('.'), 0, col('.') - 1) =~? '[a-z_]\+[a-z0-9_]*$'
-endfunction
-
-" let g:asyncomplete_auto_popup = 0
-inoremap <expr> <silent> <Tab>
-  \ pumvisible() ? "\<C-n>" :
-  \ CursorAfterOnlyWhitespace() ? "\<Tab>" :
-  \ asyncomplete#force_refresh()
-inoremap <expr> <silent> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
-inoremap <expr> <silent> <Enter> pumvisible() ? "\<C-y>" : "\<Enter>"
+" inoremap <expr> <silent> <Tab> pumvisible() ? "\<C-n>" : \<Tab>"
+" inoremap <expr> <silent> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+" inoremap <expr> <silent> <Enter> pumvisible() ? "\<C-y>" : "\<Enter>"
 
 " Use the popup menu for insert-mode completions.
 set completeopt=menu
@@ -347,9 +236,6 @@ augroup END
 
 let g:signify_vcs_list = ['git']
 
-let g:vista_default_executive = 'vim_lsp'
-
-
 " Formatting
 " ==========
 
@@ -369,6 +255,11 @@ set formatoptions+=o
 set formatoptions+=l
 " Break before a one-letter word instead of after.
 set formatoptions+=1
+
+" Do not fold anything less than 3 lines.
+set foldminlines=3
+" Start with most folds open.
+set foldlevel=8
 
 " Make vim-commentary use C++-style comments instead of C-style comments.
 " https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
@@ -402,17 +293,6 @@ autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s shiftwidth=4 tabsto
 
 set hlsearch
 
-" Clear the highlight if I spam <Escape> (i.e. press it in normal mode).
-" https://stackoverflow.com/questions/11940801/mapping-esc-in-vimrc-causes-bizarre-arrow-behaviour/16027716#16027716
-" TODO: Presently broken when tmux is not running.
-" if has('gui_running')
-"   nnoremap <Esc> :nohlsearch<Enter><Esc>
-" else
-"   augroup no_highlight
-"     autocmd TermResponse * nnoremap <Esc> :nohlsearch<Enter><Esc>
-"   augroup END
-" end
-
 " Search is case-insensitive unless an uppercase letter is used.
 set ignorecase
 set smartcase
@@ -421,11 +301,12 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-if executable('ag')
-  " Do not use --vimgrep. It creates an entry for every match on a line which
-  " makes :cdo do the wrong thing.
+" Do not use --vimgrep. It creates an entry for every match on a line which
+" makes :cdo do the wrong thing.
+if executable('rg')
+  let g:ackprg = 'rg'
+elseif executable('ag')
   let g:ackprg = 'ag'
-  let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 endif
 
 
@@ -519,12 +400,9 @@ if &term =~ '256color'
 endif
 set background=dark
 try
-  colorscheme Tomorrow-Night
+  colorscheme base16-tomorrow-night
 catch
 endtry
-
-" Enable rainbow delimiters.
-let g:rainbow_active = 1
 
 let g:lightline = {
   \ 'colorscheme': 'seoul256',
@@ -542,11 +420,6 @@ let g:lightline.active = {
   \   ['fileformat', 'fileencoding', 'filetype'],
   \ ],
   \ }
-
-let g:rainbow_conf = {
-  \ 'ctermfgs':
-    \ ['lightmagenta', 'lightblue', 'lightgreen', 'lightyellow', 'lightred']
-  \}
 
 
 " Projects

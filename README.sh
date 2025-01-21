@@ -1,4 +1,6 @@
 # Install packages.
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt update
 # KitWare makes CMake, but their PPA only publishes for LTS releases.
 sudo apt install apt-transport-https
 sudo apt update
@@ -18,6 +20,7 @@ packages=(
   silversearcher-ag
   tmux
   tree
+  tree-sitter-cli
   xclip
 )
 sudo apt install ${packages[@]}

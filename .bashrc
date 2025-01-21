@@ -17,10 +17,6 @@ source ~/.bash_prompt
 
 set -o vi
 
-# fzf will flip if this line is not in `.bashrc`, so leave it here. I've
-# checked that it plays nicely with environment variables.
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 # Print notification only for interactive shells.
 if [ -n "$(echo $- | grep i)" ]; then
   echo "sourced $HOME/.bashrc" >&2

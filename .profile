@@ -20,7 +20,6 @@ add_to_path() {
 
 add_to_path "$HOME/.yarn/bin"
 add_to_path "$HOME/.pyenv/bin"
-add_to_path "$HOME/.local/bin"
 
 # `test` returns true (0) if it is given a non-empty string.
 # ${variable+value} returns `value` if `parameter` is set to anything.
@@ -32,6 +31,8 @@ then
 fi
 
 source "$HOME/.cargo/env"
+
+add_to_path "$HOME/.local/bin"
 
 # Remove group write and other read/write permissions.
 umask 026

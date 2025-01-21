@@ -5,18 +5,25 @@
   c = commit
   ca = commit --amend
   cat = cat-file -p
+  # cf <ancestor>
+  cf = commit --fixup
   cm = commit --message
   co = checkout
-  conflicts = !git ls-files -u | cut -f 2 | sort -u
+  conflicts = diff --name-only --diff-filter=U --relative
   cum = commit --only . --message
   d = diff --stat
   dc = diff --cached
-  l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset' -10
+  l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset %Cblue%an' -10
   ls = ls-files
+  mc = merge --continue
   pending = "!f() { local r=$1; shift; git diff $(git merge-base HEAD $r) $@; }; f"
   rc = rebase --continue
   s = status --short
+  # squash <ancestor>
+  squash = rebase --interactive --autosquash --update-refs
   exec = "!exec "
+  # count-lines <email>
+  count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
 [user]
   email = jfreeman08@gmail.com
   name = John Freeman

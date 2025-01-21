@@ -17,3 +17,5 @@ yarn.lock
 .yarnrc.yml
 /conan.lock
 /.cache/
+/CMakeUserPresets.json
+.gdbinit

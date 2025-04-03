@@ -19,3 +19,4 @@ yarn.lock
 /.cache/
 /CMakeUserPresets.json
 .gdbinit
+bazel-*

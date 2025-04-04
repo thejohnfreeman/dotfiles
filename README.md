@@ -12,7 +12,7 @@ sudo pamac install git
 ```
 export GIT_DIR=$HOME/.local/share/yadm/repo.git
 mkdir -p "$(dirname "${GIT_DIR}")"
-git init --bare
+git init --bare --initial-branch master
 git config --local status.showUntrackedFiles no
 git config --local core.bare false
 git config --local core.worktree "${HOME}"

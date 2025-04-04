@@ -262,29 +262,7 @@ set foldlevel=8
 " Make vim-commentary use C++-style comments instead of C-style comments.
 " https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s shiftwidth=4 tabstop=4
-
-" function! FormatBuffer()
-"   silent !git diff --relative -U0 % | clang-format-diff -p1 -i
-"   edit
-" endfunction
-
-" function! ConfigureCpp()
-"   augroup format
-"     autocmd!
-"     " Must be nested for :edit to fire BufEnter.
-"     autocmd BufWritePost,FileWritePost * nested call FormatBuffer()
-"   augroup END
-" endfunction
-
-" TODO: Move this to an ftplugin directory.
-" augroup cpp
-"   autocmd!
-"   autocmd FileType cpp call ConfigureCpp()
-" augroup END
-
-" If you are using Poetry, start a shell in Poetry's virtual environment to
-" enable Python fixers.
-
+autocmd FileType bzl setlocal shiftwidth=4 tabstop=4
 
 " Search
 " ======

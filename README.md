@@ -18,8 +18,9 @@ git config --local core.bare false
 git config --local core.worktree "${HOME}"
 git remote add origin https://github.com/thejohnfreeman/dotfiles.git
 git fetch origin yadm
-git checkout --force yadm --recurse-submodules
+git checkout --force yadm
 # Install YADM.
+git submodule update --init --recursive
 alias yadm="${HOME}/.yadm.git/yadm"
 ```
 

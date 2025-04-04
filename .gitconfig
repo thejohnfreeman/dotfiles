@@ -37,6 +37,8 @@
   pager =
 [color]
   ui = true
+[diff]
+  colorMoved = default
 ; [rerere]
 ;   enabled = true
 [merge]
@@ -54,6 +56,10 @@
 [color "diff"]
   new = brightgreen italic
   old = red strike
+  newMoved = cyan
+  oldMoved = cyan dim
+  newMovedAlternative = magenta
+  oldMovedAlternative = magenta dim
 [color "status"]
   changed = brightyellow
   added  = brightcyan

@@ -89,9 +89,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require'lspconfig'.pyright.setup {}
 require'lspconfig'.clangd.setup {}
+require'lspconfig'.pyright.setup {}
 require'lspconfig'.ts_ls.setup{}
+
+vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
 
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', 'gh', vim.lsp.buf.declaration)

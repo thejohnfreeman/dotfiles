@@ -19,7 +19,7 @@ Plug 'tpope/vim-unimpaired'
 " Text objects for parameters/arguments.
 " Plug 'wellle/targets.vim'
 " ALL the color schemes!
-Plug 'EvitanRelta/vim-colorschemes'
+Plug 'flazz/vim-colorschemes'
 " Color-code matching delimiters.
 Plug 'HiPhish/rainbow-delimiters.nvim'
 " ALL the languages!
@@ -398,7 +398,7 @@ if &term =~ '256color'
 endif
 set background=dark
 try
-  colorscheme base16-tomorrow-night
+  colorscheme Tomorrow-Night
 catch
 endtry
 

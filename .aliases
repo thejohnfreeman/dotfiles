@@ -82,6 +82,10 @@ watch() {
   done
 }
 
+clang-format-parallel() {
+  time find . -name '*.[hc]pp' -exec parallel -I xx clang-format -i xx ::: {} +
+}
+
 alias config='git --git-dir=$HOME/.files --work-tree=$HOME'
 alias l='ls -F --color=auto'
 alias la='ls -AF --color=auto'
@@ -89,6 +93,11 @@ alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'
 alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'
 alias vim='nvim'
 alias cupcake='~/code/cupcake.py/.venv/bin/cupcake'
+alias yadm="${HOME}/.yadm.git/yadm"
+
+alias psa="ps -H -u \$(whoami)"
+alias findswp="find . -name '.*.sw?'"
+alias rmswp="find . -name '.*.sw?' -exec rm {} +"
 
 export EDITOR=vim
 export GPG_TTY=$(tty)

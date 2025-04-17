@@ -9,6 +9,10 @@ set nocompatible
 " warnings in JSON are low contrast gray-on-black.
 let g:vim_json_warnings = 0
 
+" Space is your <Leader>.
+" https://github.com/sheerun/blog/blob/master/_posts/2014-03-21-how-to-boost-your-vim-productivity.markdown
+let mapleader=' '
+
 call plug#begin()
 " Better default settings for Vim.
 Plug 'tpope/vim-sensible'
@@ -62,7 +66,6 @@ Plug 'mhinz/vim-signify'
 Plug 'liuchengxu/vista.vim'
 " Tame the quickfix window.
 Plug 'romainl/vim-qf'
-Plug 'n3wjack/logsyntax.vim'
 call plug#end()
 
 " DONE: typescript-vim vs yats.vim vs LanguageClient-neovim vs deoplete.nvim
@@ -87,9 +90,6 @@ set visualbell
 " Mappings
 " ========
 
-" Space is your <Leader>.
-" https://github.com/sheerun/blog/blob/master/_posts/2014-03-21-how-to-boost-your-vim-productivity.markdown
-let mapleader=' '
 " Fuzzy searches.
 nnoremap <Leader>f :Telescope find_files<Enter>
 nnoremap <Leader>/ :Telescope live_grep<Enter>
@@ -105,6 +105,7 @@ vnoremap <Leader>8 c**<C-R>"**<Esc>
 nnoremap <Leader>8 ysiw*l.
 " Save.
 nnoremap <Leader>w :w<Enter>
+nnoremap <Leader>n :wn<Enter>
 " Quit.
 nnoremap <Leader>q :q<Enter>
 " Format paragraph.

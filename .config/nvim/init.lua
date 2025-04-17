@@ -71,7 +71,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         if pumvisible() then
           feedkeys '<C-n>'
         elseif next(vim.lsp.get_clients { bufnr = 0 }) then
-          vim.lsp.completion.trigger()
+          vim.lsp.completion.get()
         else
           feedkeys '<Tab>'
         end
@@ -89,11 +89,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require'lspconfig'.clangd.setup {}
-require'lspconfig'.pyright.setup {}
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.lua_ls.setup{
+  settings = { Lua = { diagnostics = { globals = { 'vim' } } } }
+}
+require'lspconfig'.pyright.setup{}
 require'lspconfig'.ts_ls.setup{}
 
 vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
+
+-- Do not insert or select a completion until one is selected.
+vim.cmd('set completeopt+=noselect')
+
+vim.o.winborder = 'rounded'
+
+vim.diagnostic.config({
+  virtual_lines = true
+})
 
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', 'gh', vim.lsp.buf.declaration)

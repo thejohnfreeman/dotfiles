@@ -115,10 +115,6 @@ nnoremap <Leader>= gqap
 " Close distractions.
 nnoremap <Leader><Leader> :cclose<Enter>:lclose<Enter>:pclose<Enter>:noh<Enter>
 
-nnoremap ]q :cnext<Enter>
-nnoremap [q :cprev<Enter>
-nnoremap ]l :lnext<Enter>
-nnoremap [l :lprev<Enter>
 nnoremap <Down> :lnext<Enter>
 nnoremap <Up>   :lprev<Enter>
 

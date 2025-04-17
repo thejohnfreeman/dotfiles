@@ -158,6 +158,7 @@ command! Wq wq
 " Protect these mappings from vim-unimpaired.
 let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
 
+
 " Completion
 " ==========
 
@@ -165,8 +166,11 @@ let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
 " inoremap <expr> <silent> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 " inoremap <expr> <silent> <Enter> pumvisible() ? "\<C-y>" : "\<Enter>"
 
+set completeopt=
+" Match completions fuzzily.
+set completeopt+=fuzzy
 " Use the popup menu for insert-mode completions.
-set completeopt=menu
+set completeopt+=menu
 " Use the popup menu even when there is only one match.
 set completeopt+=menuone
 " Show extra information about the completion in the preview window.
@@ -237,6 +241,7 @@ augroup END
 
 let g:signify_vcs_list = ['git']
 
+
 " Formatting
 " ==========
 
@@ -266,6 +271,7 @@ set foldlevel=8
 " https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s shiftwidth=4 tabstop=4
 autocmd FileType bzl setlocal shiftwidth=4 tabstop=4
+
 
 " Search
 " ======

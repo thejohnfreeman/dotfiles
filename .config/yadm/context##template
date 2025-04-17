@@ -1,0 +1,7 @@
+arch     = {{ yadm.arch }}
+classes  = {{ yadm.classes }}
+distro   = {{ yadm.distro }}
+family   = {{ yadm.distro_family }}
+hostname = {{ yadm.hostname }}
+os       = {{ yadm.os }}
+user     = {{ yadm.user }}

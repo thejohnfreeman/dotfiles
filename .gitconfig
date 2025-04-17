@@ -21,8 +21,8 @@
   rc = rebase --continue
   root = rev-parse --show-toplevel
   s = status --short
-  # squash <ancestor>
-  squash = rebase --interactive --autosquash --update-refs
+  # fixup <ancestor>
+  fixup = rebase --interactive --autosquash --update-refs
   exec = "!exec "
   # count-lines <email>
   count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
@@ -34,7 +34,7 @@
   default = simple
 [core]
   excludesfile = ~/.gitignore
-  pager =
+  pager = less --quit-if-one-screen --no-init
 [color]
   ui = true
 [diff]
@@ -45,6 +45,8 @@
   ff = false
 [pull]
   ff = only
+[rebase]
+  autoSquash = true
 [init]
   defaultBranch = master
 [help]
@@ -63,5 +65,5 @@
 [color "status"]
   changed = brightyellow
   added  = brightcyan
-[commit]
-  gpgsign = true
+; [commit]
+;   gpgsign = true

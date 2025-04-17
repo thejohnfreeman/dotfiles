@@ -1,9 +1,8 @@
-local code = [[
+vim.cmd([[
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
-]]
-vim.cmd(code)
+]])
 
 -- https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 require'nvim-treesitter.configs'.setup {

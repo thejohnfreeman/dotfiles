@@ -13,60 +13,62 @@ let g:vim_json_warnings = 0
 " https://github.com/sheerun/blog/blob/master/_posts/2014-03-21-how-to-boost-your-vim-productivity.markdown
 let mapleader=' '
 
-call plug#begin()
-" Better default settings for Vim.
-Plug 'tpope/vim-sensible'
-" Make '.' work for plugins.
-Plug 'tpope/vim-repeat'
-" [q / ]q = prev / next quickfix.
-Plug 'tpope/vim-unimpaired'
-" Text objects for parameters/arguments.
-" Plug 'wellle/targets.vim'
-" ALL the color schemes!
-Plug 'flazz/vim-colorschemes'
-" Color-code matching delimiters.
-Plug 'HiPhish/rainbow-delimiters.nvim'
-" ALL the languages!
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Dim inactive code.
-" Plug 'folke/twilight.nvim'
-" Fuzzy search everywhere.
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
-" Remind me of register contents when I press `"`.
-Plug 'junegunn/vim-peekaboo'
-" Remind me of mark targets when I press ```.
-" Plug 'Yilin-Yang/vim-markbar'
-" Expanding visual selection.
-Plug 'terryma/vim-expand-region'
-" Context-sensitive absolute and relative line numbering.
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-" Incremental search.
-Plug 'haya14busa/incsearch.vim'
-" Seamless C-h/j/k/l between vim windows and tmux panes.
-Plug 'christoomey/vim-tmux-navigator'
-" gc to un/comment target or selection; gcc to un/comment line.
-Plug 'tpope/vim-commentary'
-" Case-preserving substitution.
-Plug 'tpope/vim-abolish'
-" yank-then-surround-with ('ys'), change ('cs'), or delete ('ds') delimiters.
-Plug 'tpope/vim-surround'
-" Lightweight, orthogonal status line.
-Plug 'itchyny/lightline.vim'
-" Almost a GUI for Git.
-Plug 'jreybert/vimagit'
-" TRIAL: A better file explorer.
-Plug 'tpope/vim-vinegar'
-" Use tmux as a REPL.
-Plug 'jpalardy/vim-slime'
-" Mark diff in the gutter.
-Plug 'mhinz/vim-signify'
-" Tag bar.
-Plug 'liuchengxu/vista.vim'
-" Tame the quickfix window.
-Plug 'romainl/vim-qf'
-call plug#end()
+set runtimepath^=~/.vim/plug
+silent! if plug#begin()
+  " Better default settings for Vim.
+  Plug 'tpope/vim-sensible'
+  " Make '.' work for plugins.
+  Plug 'tpope/vim-repeat'
+  " [q / ]q = prev / next quickfix.
+  Plug 'tpope/vim-unimpaired'
+  " Text objects for parameters/arguments.
+  " Plug 'wellle/targets.vim'
+  " ALL the color schemes!
+  Plug 'flazz/vim-colorschemes'
+  " Color-code matching delimiters.
+  Plug 'HiPhish/rainbow-delimiters.nvim'
+  " ALL the languages!
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Dim inactive code.
+  " Plug 'folke/twilight.nvim'
+  " Fuzzy search everywhere.
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+  " Remind me of register contents when I press `"`.
+  Plug 'junegunn/vim-peekaboo'
+  " Remind me of mark targets when I press ```.
+  " Plug 'Yilin-Yang/vim-markbar'
+  " Expanding visual selection.
+  Plug 'terryma/vim-expand-region'
+  " Context-sensitive absolute and relative line numbering.
+  Plug 'jeffkreeftmeijer/vim-numbertoggle'
+  " Incremental search.
+  Plug 'haya14busa/incsearch.vim'
+  " Seamless C-h/j/k/l between vim windows and tmux panes.
+  Plug 'christoomey/vim-tmux-navigator'
+  " gc to un/comment target or selection; gcc to un/comment line.
+  Plug 'tpope/vim-commentary'
+  " Case-preserving substitution.
+  Plug 'tpope/vim-abolish'
+  " yank-then-surround-with ('ys'), change ('cs'), or delete ('ds') delimiters.
+  Plug 'tpope/vim-surround'
+  " Lightweight, orthogonal status line.
+  Plug 'itchyny/lightline.vim'
+  " Almost a GUI for Git.
+  Plug 'jreybert/vimagit'
+  " TRIAL: A better file explorer.
+  Plug 'tpope/vim-vinegar'
+  " Use tmux as a REPL.
+  Plug 'jpalardy/vim-slime'
+  " Mark diff in the gutter.
+  Plug 'mhinz/vim-signify'
+  " Tag bar.
+  Plug 'liuchengxu/vista.vim'
+  " Tame the quickfix window.
+  Plug 'romainl/vim-qf'
+  call plug#end()
+endif
 
 " DONE: typescript-vim vs yats.vim vs LanguageClient-neovim vs deoplete.nvim
 " DONE: vim-gitgutter + terminus OR vim-signify (mark diff in gutter)

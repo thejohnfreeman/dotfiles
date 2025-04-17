@@ -97,9 +97,6 @@ require'lspconfig'.ts_ls.setup{}
 
 vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
 
--- Do not insert or select a completion until one is selected.
-vim.cmd('set completeopt+=noselect')
-
 vim.o.winborder = 'rounded'
 
 vim.diagnostic.config({

@@ -65,5 +65,6 @@
 [color "status"]
   changed = brightyellow
   added  = brightcyan
-; [commit]
-;   gpgsign = true
+[include]
+  # A missing file is ignored.
+  path = .gitconfig.local

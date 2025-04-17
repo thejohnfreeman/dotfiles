@@ -1,0 +1,6 @@
+[user]
+  email = jfreeman08@gmail.com
+  name = John Freeman
+  signingkey = FD2838F2297E3D45!
+[commit]
+  gpgsign = true

@@ -26,10 +26,6 @@
   exec = "!exec "
   # count-lines <email>
   count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
-[user]
-  email = jfreeman08@gmail.com
-  name = John Freeman
-  signingkey = FD2838F2297E3D45!
 [push]
   default = simple
 [core]

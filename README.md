@@ -30,6 +30,7 @@ alias yadm="${HOME}/.yadm.git/yadm"
 
 ```
 yadm alt
+yadm bootstrap
 ```
 
 - Install the [Bitwarden addon for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/) and log in.

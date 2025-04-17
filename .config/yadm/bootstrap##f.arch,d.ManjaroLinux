@@ -1,0 +1,77 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+yadm remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+
+# Install packages.
+packages=(
+  clang
+  cmake
+  curl
+  docker
+  entr
+  git
+  jq
+  kitty
+  lua-language-server
+  make
+  neovim
+  ninja
+  nodejs
+  npm
+  pyenv
+  pyright
+  python-pipx
+  ripgrep
+  tmux
+  tree
+  typescript-language-server
+  xclip
+)
+# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+packages+=(
+  base-devel
+  openssl
+  tk
+  xz
+  zlib
+)
+sudo pamac upgrade
+sudo pamac install ${packages[@]}
+
+sudo systemctl start pcscd.service
+
+# General Linux configuration below.
+
+# Install Vim plugins.
+# We cannot curl on all hosts, but we can git-clone on all hosts.
+# We want to clone vim-plug somewhere such that it can be autoloaded by Vim,
+# but the repository does not have its own `autoload` directory.
+# We must clone it to a directory named `autoload`
+# and then add the parent of that directory to the runtime path.
+# We cannot put the plugin in a nested autoload directory
+# because its function are not defined with the correct prefix.
+mkdir --parents ~/.vim/plug
+git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+
+# Install Python.
+pyenv install 3.12
+pyenv global 3.12
+eval "$(pyenv init --path)"
+pip install --upgrade pip
+
+pip install poetry conan
+
+# Create an SSH key for this machine. Never copy the private half anywhere.
+ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
+eval "$(ssh-agent -s)"
+ssh-add "${HOME}/.ssh/id_ed25519"
+
+cat >>~/.zshrc <<EOF
+source ~/.aliases
+eval "\$(pyenv init --path)"
+EOF

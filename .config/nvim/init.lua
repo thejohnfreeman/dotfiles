@@ -100,9 +100,12 @@ vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
 vim.o.winborder = 'rounded'
 
 vim.diagnostic.config({
-  virtual_lines = true
+  virtual_lines = { current_line =  true },
 })
 
+vim.keymap.set('n', 'K', vim.lsp.buf.hover)
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', 'gh', vim.lsp.buf.declaration)
-vim.keymap.set('n', 'gr', function () vim.lsp.buf.references(nil, { loclist = true }) end)
+vim.keymap.set('n', 'gri', function () vim.lsp.buf.implementation({ loclist = true }) end)
+vim.keymap.set('n', 'grr', function () vim.lsp.buf.references(nil, { loclist = true }) end)
+vim.keymap.set('n', 'grn', vim.lsp.buf.rename)

@@ -93,6 +93,7 @@ alias tree='tree -I "$(paste -d\| -s ~/.treeignore)"'
 alias vim='nvim'
 alias cupcake='~/code/cupcake.py/.venv/bin/cupcake'
 alias yadm="${HOME}/.yadm.git/yadm"
+alias gpgl='gpg --list-secret-keys --keyid-format long --list-options show-unusable-subkeys --with-subkey-fingerprint'
 
 alias psa="ps -H -u \$(whoami)"
 alias findswp="find . -name '.*.sw?'"

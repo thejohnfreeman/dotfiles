@@ -1,0 +1,11 @@
+#!/bin/bash
+# /bin/sh points to dash on Ubuntu since 22.04.
+# https://unix.stackexchange.com/questions/442510/how-to-use-bash-for-sh-in-ubuntu
+
+source /etc/os-release
+if [ "${VERSION_ID}" = "24.04" ]; then
+  source ubuntu-24.04.sh
+else
+  echo "unrecognized version: '${VERSION_ID}' a.k.a '${VERSION}'"
+  exit 1
+fi

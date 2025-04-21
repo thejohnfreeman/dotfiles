@@ -54,8 +54,10 @@ sudo systemctl start pcscd.service
 # and then add the parent of that directory to the runtime path.
 # We cannot put the plugin in a nested autoload directory
 # because its function are not defined with the correct prefix.
-mkdir --parents ~/.vim/plug
-git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
+  mkdir --parents ~/.vim/plug
+  git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+fi
 vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 
 # Install Python.

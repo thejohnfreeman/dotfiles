@@ -57,8 +57,8 @@ sudo systemctl start pcscd.service
 if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
   mkdir --parents ~/.vim/plug
   git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+  env --unset GIT_DIR vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 fi
-vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 
 # Install Python.
 pyenv install 3.12

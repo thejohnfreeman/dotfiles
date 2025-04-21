@@ -12,6 +12,9 @@ git clone https://github.com/chriskempson/base16-shell.git "${BASE16_SHELL}"
 source "${BASE16_SHELL}/profile_helper.sh"
 "${BASE16_SHELL}/colortest"
 
-mkdir --parents ~/.vim/plug
-git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
-vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+# Install Vim plugins.
+if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
+  mkdir --parents ~/.vim/plug
+  git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+  env --unset GIT_DIR vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+fi

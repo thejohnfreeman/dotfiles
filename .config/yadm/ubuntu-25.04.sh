@@ -27,6 +27,7 @@ packages=(
   libssl-dev
   neovim
   ninja-build
+  openssh-server
   pipx
   ripgrep
   tmux

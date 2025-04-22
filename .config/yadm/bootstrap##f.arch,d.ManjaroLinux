@@ -47,13 +47,6 @@ sudo systemctl start pcscd.service
 # General Linux configuration below.
 
 # Install Vim plugins.
-# We cannot curl on all hosts, but we can git-clone on all hosts.
-# We want to clone vim-plug somewhere such that it can be autoloaded by Vim,
-# but the repository does not have its own `autoload` directory.
-# We must clone it to a directory named `autoload`
-# and then add the parent of that directory to the runtime path.
-# We cannot put the plugin in a nested autoload directory
-# because its function are not defined with the correct prefix.
 if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
   mkdir --parents ~/.vim/plug
   git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload

@@ -4,6 +4,8 @@
 CLANG_VERSION=10
 NODE_VERSION=20
 
+yadm remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+
 # Install packages.
 # KitWare makes CMake, but their PPA only publishes for LTS releases.
 sudo apt update

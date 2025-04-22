@@ -4,6 +4,8 @@
 CLANG_VERSION=18
 NODE_VERSION=22
 
+yadm remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+
 # Install packages.
 # KitWare makes CMake, but their PPA only publishes for LTS releases.
 sudo add-apt-repository --yes ppa:neovim-ppa/unstable

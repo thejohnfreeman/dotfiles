@@ -8,6 +8,7 @@ yadm remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
 
 # Install packages.
 packages=(
+  bind
   clang
   cmake
   curl

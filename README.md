@@ -48,12 +48,14 @@ xclip -i -sel clip < ~/.ssh/id_ed25519.pub
 ```
 # On your primary key machine:
 fingerprint() { awk -F\: '/^fpr/ { print $10 }'; }
+export GNUPGHOME=~/gnupg
 primary=$(gpg --list-keys --with-colons | head -3 | fingerprint)
 # You need your passphrase for this step.
 gpg --quick-add-key ${primary} ed25519 sign 2y
 subkey=$(gpg --list-keys --with-colons | tail -3 | fingerprint)
 # Need passphrase.
-gpg --export-secret-subkeys --armor --export-filter drop-subkey="fpr <> ${subkey}" >subkey.asc
+gpg --armor --export-secret-subkeys ${subkey}! >subkey.asc
+gpg --armor --export >>subkey.asc
 scp subkey.asc $(whoami)@${remote}:/home/$(whoami)/
 ```
 

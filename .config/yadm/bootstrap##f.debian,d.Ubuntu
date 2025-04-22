@@ -8,6 +8,12 @@ if [ "${VERSION_ID}" = "23.04" ]; then
 elif [ "${VERSION_ID}" = "24.04" ]; then
   source ubuntu-${VERSION_ID}.sh
 else
+  # Install Vim plugins before we start editing a bootstrap script.
+  if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
+    mkdir --parents ~/.vim/plug
+    git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+    env --unset GIT_DIR vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+  fi
   echo "unrecognized version: '${VERSION_ID}' a.k.a '${VERSION}'"
   exit 1
 fi

@@ -4,9 +4,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-yadm remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+source liblinux.sh
 
 # Install packages.
+sudo pamac upgrade
 packages=(
   bind
   clang
@@ -40,32 +41,15 @@ packages+=(
   xz
   zlib
 )
-sudo pamac upgrade
 sudo pamac install ${packages[@]}
 
 sudo systemctl start pcscd.service
 
-# General Linux configuration below.
-
-# Install Vim plugins.
-if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
-  mkdir --parents ~/.vim/plug
-  git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
-  env --unset GIT_DIR vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-fi
-
-# Install Python.
-pyenv install 3.12
-pyenv global 3.12
-eval "$(pyenv init --path)"
-pip install --upgrade pip
-
-pip install poetry conan
-
-# Create an SSH key for this machine. Never copy the private half anywhere.
-ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
-eval "$(ssh-agent -s)"
-ssh-add "${HOME}/.ssh/id_ed25519"
+install-python 3.12
+pipx install poetry conan
+install-vim-plugins
+generate-ssh-key
+configure-yadm
 
 cat >>~/.zshrc <<EOF
 source ~/.aliases

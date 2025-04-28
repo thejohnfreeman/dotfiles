@@ -321,15 +321,6 @@ augroup cursor
         \ endif
 augroup END
 
-" augroup quickfix
-"   autocmd!
-"   " Open QuickFix hits in the previous window.
-"   " https://vi.stackexchange.com/a/13377/1176
-"   autocmd FileType qf nnoremap <buffer> <Enter> :exe 'wincmd p \| '.line('.').'cc'<Enter>
-"   autocmd FileType qf nnoremap <buffer> <BS> <C-w><C-p>
-"   autocmd FileType qf nnoremap <buffer> <Esc> <C-w><C-p>
-" augroup END
-
 
 " vim-slime
 " =========

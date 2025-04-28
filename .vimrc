@@ -315,7 +315,8 @@ autocmd VimResized * :wincmd =
 augroup cursor
   autocmd!
   autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \ if line("'\"") > 0 && line("'\"") <= line("$")
+        \     && index(['gitcommit', 'gitrebase'], &filetype) < 0 |
         \   execute "normal! g'\"zzzv" |
         \ endif
 augroup END

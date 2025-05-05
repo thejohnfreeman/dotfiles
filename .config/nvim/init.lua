@@ -5,7 +5,7 @@ source ~/.vimrc
 ]])
 
 require'oil'.setup {}
-vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false })
+vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false, silent = true })
 
 -- https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 require'nvim-treesitter.configs'.setup {

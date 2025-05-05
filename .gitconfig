@@ -14,6 +14,7 @@
   d = diff --stat
   dc = diff --cached
   dir = rev-parse --git-dir
+  d0 = diff -U0
   l = log --graph --topo-order --pretty='%C(auto)%h%d %s %Cgreen(%ar)%Creset %Cblue%an' -10
   lg = log --graph --topo-order --pretty='%C(auto)%h %G?%d %s %Cgreen(%ar)%Creset %Cblue%an' -10
   ls = ls-files

@@ -102,9 +102,7 @@ if vim.lsp.enable then
   vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
 end
 
-if vim.o.winborder then
-  vim.o.winborder = 'rounded'
-end
+pcall(function () vim.o.winborder = 'rounded' end)
 
 vim.diagnostic.config({
   virtual_lines = { current_line =  true },

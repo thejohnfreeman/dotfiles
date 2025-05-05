@@ -33,11 +33,11 @@ vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.updatetime = 200
 vim.api.nvim_create_autocmd("CursorHold", {
   pattern = { '*' },
-  callback = function() vim.lsp.buf.document_highlight() end,
+  callback = function () vim.lsp.buf.document_highlight() end,
 })
 vim.api.nvim_create_autocmd("CursorMoved", {
   pattern = { '*' },
-  callback = function() vim.lsp.buf.clear_references() end,
+  callback = function () vim.lsp.buf.clear_references() end,
 })
 
 -- https://neovim.io/doc/user/lsp.html#lsp-config
@@ -61,15 +61,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
         return tonumber(vim.fn.pumvisible()) ~= 0
     end
 
-    if client.supports_method('textDocument/completion') then
+    if client.supports_method('textDocument/completion') and vim.lsp.completion then
       -- Enable auto-completion
       vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
       -- Enter to accept completion.
-      keymap('<Enter>', function()
+      keymap('<Enter>', function ()
           return pumvisible() and '<C-y>' or '<Enter>'
       end, { expr = true }, 'i')
       -- Tab to step forward through completions.
-      keymap('<Tab>', function()
+      keymap('<Tab>', function ()
         if pumvisible() then
           feedkeys '<C-n>'
         elseif next(vim.lsp.get_clients { bufnr = 0 }) then
@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
       end, {}, 'i')
       -- Shift-Tab to step backward through completions.
-      keymap('<S-Tab>', function()
+      keymap('<S-Tab>', function ()
             if pumvisible() then
                 feedkeys '<C-p>'
             else
@@ -98,9 +98,13 @@ require'lspconfig'.lua_ls.setup{
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.ts_ls.setup{}
 
-vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
+if vim.lsp.enable then
+  vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
+end
 
-vim.o.winborder = 'rounded'
+if vim.o.winborder then
+  vim.o.winborder = 'rounded'
+end
 
 vim.diagnostic.config({
   virtual_lines = { current_line =  true },

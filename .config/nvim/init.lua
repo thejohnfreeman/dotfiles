@@ -4,6 +4,9 @@ let &packpath = &runtimepath
 source ~/.vimrc
 ]])
 
+require'oil'.setup {}
+vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false })
+
 -- https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {

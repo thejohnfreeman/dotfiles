@@ -57,8 +57,9 @@ silent! if plug#begin()
   Plug 'itchyny/lightline.vim'
   " Almost a GUI for Git.
   Plug 'jreybert/vimagit'
-  " TRIAL: A better file explorer.
-  Plug 'tpope/vim-vinegar'
+  " A better file explorer.
+  " Plug 'tpope/vim-vinegar'
+  Plug 'stevearc/oil.nvim'
   " Use tmux as a REPL.
   Plug 'jpalardy/vim-slime'
   " Mark diff in the gutter.
@@ -83,6 +84,7 @@ endif
 " TODO: xolox/vim-session
 " TODO: rbong/flog
 " TODO: vim-autoformat/vim-autoformat
+" TOOD: kana/vim-submode for Magit bindings
 
 
 " Be quiet.
@@ -98,6 +100,7 @@ nnoremap <Leader>/ :Telescope live_grep<Enter>
 nnoremap <Leader>t :Telescope lsp_document_symbols<Enter>
 nnoremap <Leader>b :Telescope buffers<Enter>
 nnoremap <Leader>c <Plug>SlimeMotionSend
+nnoremap <Leader>g :Magit<Enter>
 " Make a Markdown link.
 vnoremap <Leader>l c[<C-R>"]()<Esc>
 " Make inline code in Markdown.
@@ -165,7 +168,7 @@ let g:nremap = {"[e": "", "]e": "", "[r": "", "]r": ""}
 
 set completeopt=
 " Match completions fuzzily.
-set completeopt+=fuzzy
+silent! set completeopt+=fuzzy
 " Use the popup menu for insert-mode completions.
 set completeopt+=menu
 " Use the popup menu even when there is only one match.

@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 
 -- https://neovim.io/doc/user/lsp.html#lsp-config
 vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
+  callback = function (args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     -- https://gist.github.com/MariaSolOs/2e44a86f569323c478e5a078d0cf98cc

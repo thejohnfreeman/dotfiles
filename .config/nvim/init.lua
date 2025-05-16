@@ -4,7 +4,12 @@ let &packpath = &runtimepath
 source ~/.vimrc
 ]])
 
-require'oil'.setup {}
+require'oil'.setup {
+  keymaps = {
+    ["<C-h>"] = false,
+    ["<C-l>"] = false,
+  }
+}
 vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false, silent = true })
 
 -- https://github.com/nvim-treesitter/nvim-treesitter#available-modules

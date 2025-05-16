@@ -1,5 +1,5 @@
 [user]
   email = john.freeman@citadel.com
-  name = Freeman, John
+  name = John Freeman
 [http]
   sslVerify = false

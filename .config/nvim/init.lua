@@ -38,14 +38,6 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 vim.opt.updatetime = 200
-vim.api.nvim_create_autocmd("CursorHold", {
-  pattern = { '*' },
-  callback = function () vim.lsp.buf.document_highlight() end,
-})
-vim.api.nvim_create_autocmd("CursorMoved", {
-  pattern = { '*' },
-  callback = function () vim.lsp.buf.clear_references() end,
-})
 
 -- https://neovim.io/doc/user/lsp.html#lsp-config
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -55,7 +47,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- https://gist.github.com/MariaSolOs/2e44a86f569323c478e5a078d0cf98cc
     local function keymap(lhs, rhs, opts, mode)
         opts = type(opts) == 'string' and { desc = opts }
-            or vim.tbl_extend('error', opts --[[@as table]], { buffer = bufnr })
+            or vim.tbl_extend('error', opts --[[@as table]], { buffer = args.buf })
         mode = mode or 'n'
         vim.keymap.set(mode, lhs, rhs, opts)
     end
@@ -66,6 +58,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local function pumvisible()
         return tonumber(vim.fn.pumvisible()) ~= 0
+    end
+
+    if client.supports_method('textDocument/documentHighlight') then
+      vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = args.buf,
+        callback = function () vim.lsp.buf.document_highlight() end,
+      })
+      vim.api.nvim_create_autocmd("CursorMoved", {
+        buffer = args.buf,
+        callback = function () vim.lsp.buf.clear_references() end,
+      })
     end
 
     if client.supports_method('textDocument/completion') and vim.lsp.completion then
@@ -100,13 +103,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.lua_ls.setup{
-  settings = { Lua = { diagnostics = { globals = { 'vim' } } } }
+  settings = { Lua = { diagnostics = { globals = { 'vim' } } } },
 }
 require'lspconfig'.pyright.setup{}
+require'lspconfig'.starpls.setup{}
 require'lspconfig'.ts_ls.setup{}
 
 if vim.lsp.enable then
-  vim.lsp.enable({'clangd', 'pyright', 'ts_ls'})
+  vim.lsp.enable({'clangd', 'lua_ls', 'pyright', 'ts_ls'})
 end
 
 pcall(function () vim.o.winborder = 'rounded' end)

@@ -86,6 +86,7 @@ clang-format-parallel() {
   time find . -name '*.[hc]pp' -exec parallel -I xx clang-format -i xx ::: {} +
 }
 
+alias path='echo $PATH | tr ":" "\n"'
 alias l='ls -F --color=auto'
 alias la='ls -AF --color=auto'
 alias ll='ls -Fhl --color=auto --time-style=+%Y-%m-%d\ %H:%M:%S'

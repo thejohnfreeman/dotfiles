@@ -4,12 +4,18 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-gh auth login
-gh auth setup-git
+if ! gh auth status; then
+  gh auth login
+  gh auth setup-git
+fi
 
 BASE16_SHELL="${HOME}/.config/base16-shell"
-git clone https://github.com/chriskempson/base16-shell.git "${BASE16_SHELL}"
+if [ ! -e "${BASE16_SHELL}" ]; then
+  git clone https://github.com/chriskempson/base16-shell.git "${BASE16_SHELL}"
+fi
+set +o nounset
 source "${BASE16_SHELL}/profile_helper.sh"
+set -o nounset
 "${BASE16_SHELL}/colortest"
 
 # Install Vim plugins.

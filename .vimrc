@@ -189,7 +189,7 @@ set completeopt+=noinsert
 " and `unnamedplus` goes to `XA_CLIPBOARD`.
 " `XA_PRIMARY` stores the mouse selection.
 " VMware Workstation syncs the Windows clipboard with XA_PRIMARY.
-set clipboard=unnamed
+set clipboard+=unnamedplus
 
 " Do not overwrite the default register when changing text.
 noremap c "_c

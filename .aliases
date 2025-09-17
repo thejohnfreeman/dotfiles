@@ -86,6 +86,7 @@ clang-format-parallel() {
   time find . -name '*.[hc]pp' -exec parallel -I xx clang-format -i xx ::: {} +
 }
 
+alias g='git'
 alias path='echo $PATH | tr ":" "\n"'
 alias l='ls -F --color=auto'
 alias la='ls -AF --color=auto'
@@ -96,7 +97,9 @@ alias cupcake='~/code/cupcake.py/.venv/bin/cupcake'
 alias yadm="${HOME}/.yadm.git/yadm"
 alias gpgl='gpg --list-secret-keys --keyid-format long --list-options show-unusable-subkeys --with-subkey-fingerprint'
 
-alias psa="ps -H -u \$(whoami)"
+alias tmad='tmux attach-session -d'
+alias vgc='vim $(git conflicts)'
+alias psa='ps -H -u $(whoami)'
 alias findswp="find . -name '.*.sw?'"
 alias rmswp="find . -name '.*.sw?' -exec rm {} +"
 

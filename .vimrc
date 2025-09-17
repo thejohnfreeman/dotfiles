@@ -43,8 +43,6 @@ silent! if plug#begin()
   Plug 'terryma/vim-expand-region'
   " Context-sensitive absolute and relative line numbering.
   Plug 'jeffkreeftmeijer/vim-numbertoggle'
-  " Incremental search.
-  Plug 'haya14busa/incsearch.vim'
   " Seamless C-h/j/k/l between vim windows and tmux panes.
   Plug 'christoomey/vim-tmux-navigator'
   " gc to un/comment target or selection; gcc to un/comment line.
@@ -277,14 +275,9 @@ autocmd FileType bzl setlocal shiftwidth=4 tabstop=4
 " ======
 
 set hlsearch
-
-" Search is case-insensitive unless an uppercase letter is used.
-set ignorecase
-set smartcase
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+set incsearch
+" Make incremental search case-sensitive by default.
+nnoremap / /\c
 
 " Do not use --vimgrep. It creates an entry for every match on a line which
 " makes :cdo do the wrong thing.

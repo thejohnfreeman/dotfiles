@@ -16,20 +16,6 @@ vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false, silent = true })
 
 -- https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {
-    "c",
-    "cpp",
-    "lua",
-    "python",
-    "typescript",
-    "javascript",
-    "vim",
-    "vimdoc",
-    "query",
-    "markdown",
-    "markdown_inline",
-  },
-  auto_install = true,
   highlight = { enable = true },
   indent = { enable = true },
 }
@@ -101,17 +87,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require'lspconfig'.clangd.setup{}
-require'lspconfig'.lua_ls.setup{
+vim.lsp.config('clangd', {
+  cmd = {
+    'clangd',
+    '--background-index',
+    -- '--log-verbose',
+  },
+})
+vim.lsp.config('lua_ls', {
   settings = { Lua = { diagnostics = { globals = { 'vim' } } } },
-}
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.starpls.setup{}
-require'lspconfig'.ts_ls.setup{}
-
-if vim.lsp.enable then
-  vim.lsp.enable({'clangd', 'lua_ls', 'pyright', 'ts_ls'})
-end
+})
+vim.lsp.enable({
+  'clangd',
+  'lua_ls',
+  'pyright',
+  'starpls',
+  'ts_ls',
+})
 
 pcall(function () vim.o.winborder = 'rounded' end)
 

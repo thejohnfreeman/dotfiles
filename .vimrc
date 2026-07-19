@@ -146,6 +146,7 @@ nnoremap Y y$
 inoremap <F1> <Esc>
 vnoremap <F1> <Esc>
 nnoremap q: :q
+command! E e
 command! Q q
 command! W w
 command! Wq wq

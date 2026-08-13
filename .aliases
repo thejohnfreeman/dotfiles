@@ -1,3 +1,5 @@
+set -o vi
+
 # https://jfreeman.dev/blog/2020/02/10/how-to-initialize-a-docker-container-without-building-an-image
 # Start an interactive shell in a container, set in the current directory,
 # after optional extra installation.

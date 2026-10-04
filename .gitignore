@@ -1,4 +1,5 @@
 .*.sw?
+.sw?
 .build/
 .ccls-cache/
 .clangd/
@@ -21,3 +22,5 @@ compile_commands.json
 poetry.lock
 vimrc
 yarn.lock
+pnpm-lock.yaml
+pnpm-workspace.yaml

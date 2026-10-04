@@ -6,19 +6,26 @@ let &packpath = &runtimepath
 source ~/.vimrc
 ]])
 
-require'oil'.setup {
-  keymaps = {
-    ["<C-h>"] = false,
-    ["<C-l>"] = false,
-  },
-}
-vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false, silent = true })
+local ok, oil = pcall(require, 'oil')
+if ok then
+  oil.setup {
+    keymaps = {
+      ["<C-h>"] = false,
+      ["<C-l>"] = false,
+    },
+  }
+  vim.keymap.set('n', '-', ':Oil %:p:h<Enter>', { remap = false, silent = true })
+end
 
--- https://github.com/nvim-treesitter/nvim-treesitter#available-modules
-require'nvim-treesitter.configs'.setup {
-  highlight = { enable = true },
-  indent = { enable = true },
-}
+-- https://github.com/nvim-treesitter/nvim-treesitter/tree/main#supported-features
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    -- Fails harmlessly when no parser exists for this filetype.
+    if pcall(vim.treesitter.start, args.buf) then
+      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+  end,
+})
 
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
@@ -95,7 +102,10 @@ vim.lsp.config('clangd', {
   },
 })
 vim.lsp.config('lua_ls', {
-  settings = { Lua = { diagnostics = { globals = { 'vim' } } } },
+  settings = { Lua = {
+    runtime = { version = 'LuaJIT' },
+    workspace = { library = { vim.env.VIMRUNTIME }, checkThirdParty = false },
+  } },
 })
 vim.lsp.enable({
   'clangd',

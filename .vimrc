@@ -34,7 +34,7 @@ silent! if plug#begin()
   " Plug 'folke/twilight.nvim'
   " Fuzzy search everywhere.
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+  Plug 'nvim-telescope/telescope.nvim'
   " Remind me of register contents when I press `"`.
   Plug 'junegunn/vim-peekaboo'
   " Remind me of mark targets when I press ```.

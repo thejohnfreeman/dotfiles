@@ -28,8 +28,10 @@ packages=(
   pyright
   python-pipx
   ripgrep
+  # starpls  # Starlark language server.
   tmux
   tree
+  tree-sitter-cli
   typescript-language-server
   xclip
 )

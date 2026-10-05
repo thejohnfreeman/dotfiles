@@ -1,3 +1,6 @@
 [submodule ".yadm"]
 	path = .yadm.git
 	url = https://github.com/yadm-dev/yadm.git
+[submodule ".config/tinted-theming/tinted-shell"]
+	path = .config/tinted-theming/tinted-shell
+	url = https://github.com/tinted-theming/tinted-shell.git

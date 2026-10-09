@@ -5,6 +5,7 @@
 # Remember: we cannot assume that Neovim is installed.
 
 source /etc/os-release
+cd "${HOME}/.config/yadm"
 script="ubuntu-${VERSION_ID}.sh"
 if [ -e "${script}" ]; then
   source "${script}"

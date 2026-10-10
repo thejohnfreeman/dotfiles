@@ -1,19 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 set -o errexit
 set -o nounset
 set -o pipefail
 
-source liblinux.sh
-
 # Install packages.
 sudo pamac upgrade
 packages=(
+  base-devel
   bind
   clang
   cmake
   curl
-  docker
   entr
   git
   jq
@@ -24,36 +22,36 @@ packages=(
   ninja
   nodejs
   npm
-  pyenv
+  podman
   pyright
-  python-pipx
   ripgrep
   # starpls  # Starlark language server.
   tmux
   tree
   tree-sitter-cli
   typescript-language-server
+  uv
   xclip
 )
-# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-packages+=(
-  base-devel
-  openssl
-  tk
-  xz
-  zlib
-)
-sudo pamac install ${packages[@]}
+sudo pamac install "${packages[@]}"
 
-sudo systemctl start pcscd.service
+# sudo systemctl enable --now pcscd.service
 
-install-python 3.12
-pipx install poetry conan
-install-vim-plugins
-generate-ssh-key
-configure-yadm
+uv python install
+uv tool install conan
+uv tool install cupcake
 
-cat >>~/.zshrc <<EOF
+# Install Vim plugins.
+[ -e ~/.vim/plug/autoload/plug.vim ] || git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+env --unset GIT_DIR nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+
+# Generate an SSH key for this machine. Never copy the private half anywhere.
+[ -e ~/.ssh/id_ed25519 ] || ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
+[ -z "${SSH_AUTH_SOCK:-}" ] || ssh-add ~/.ssh/id_ed25519
+
+yadm="${HOME}/.yadm.git/yadm"
+"${yadm}" remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+
+grep -qF '~/.aliases' ~/.zshrc || cat >> ~/.zshrc <<'EOF'
 source ~/.aliases
-eval "\$(pyenv init --path)"
 EOF

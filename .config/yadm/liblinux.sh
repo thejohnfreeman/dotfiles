@@ -7,20 +7,14 @@ install-python() {
 }
 
 install-vim-plugins() {
-    if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
-      mkdir --parents ~/.vim/plug
-      git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
-      env --unset GIT_DIR vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-    fi
+    [ -e ~/.vim/plug/autoload/plug.vim ] || git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
+    env --unset GIT_DIR nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 }
 
 generate-ssh-key() {
-    if [ ! -e ~/.ssh/id_ed25519 ]; then
-      # Create an SSH key for this machine. Never copy the private half anywhere.
-      ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
-      eval "$(ssh-agent -s)"
-      ssh-add ~/.ssh/id_ed25519
-    fi
+    # Generate an SSH key for this machine. Never copy the private half anywhere.
+    [ -e ~/.ssh/id_ed25519 ] || ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
+    [ -z "${SSH_AUTH_SOCK:-}" ] || ssh-add -T ~/.ssh/id_ed25519.pub 2>/dev/null || ssh-add ~/.ssh/id_ed25519
 }
 
 configure-yadm() {

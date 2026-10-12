@@ -4,10 +4,12 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+source liblinux.sh
+
+export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
+
 # Install packages.
-# KitWare makes CMake, but their PPA only publishes for LTS releases.
 sudo apt update
-sudo apt install --yes apt-transport-https
 packages=(
   clang
   clangd
@@ -22,6 +24,7 @@ packages=(
   neovim
   ninja-build
   openssh-server
+  podman
   ripgrep
   tmux
   tree
@@ -29,44 +32,17 @@ packages=(
   xclip
   unzip
 )
-sudo apt install --yes ${packages[@]}
+sudo apt install --yes "${packages[@]}"
 
-# bun
-if ! command -v bun; then
-  curl -fsSL https://bun.com/install | bash
-fi
+command -v bun >/dev/null || curl -fsSL https://bun.com/install | bash
+command -v uv >/dev/null || curl -fsSL https://astral.sh/uv/install.sh | sh
 
-# python3
-if ! command -v python3; then
-  uv python install
-fi
+uv python install
+uv tool install conan
+uv tool install cupcake
 
-# conan
-if ! command -v conan; then
-  uv tool install conan
-fi
-
-# cupcake
-if ! command -v cupcake; then
-  uv tool install cupcake
-fi
-
-# Install Vim plugins.
-if [ ! -e ~/.vim/plug/autoload/plug.vim ]; then
-  mkdir --parents ~/.vim/plug
-  git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
-  env --unset GIT_DIR vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-fi
-
-# Generate SSH key.
-if [ ! -e ~/.ssh/id_ed25519 ]; then
-  # Create an SSH key for this machine. Never copy the private half anywhere.
-  ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
-  eval "$(ssh-agent -s)"
-  ssh-add ~/.ssh/id_ed25519
-fi
-
-yadm="${HOME}/.yadm.git/yadm"
-"${yadm}" remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+install-vim-plugins
+generate-ssh-key
+configure-yadm
 
 echo "Please restart."

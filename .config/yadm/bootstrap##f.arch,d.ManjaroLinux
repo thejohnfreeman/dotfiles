@@ -4,11 +4,18 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+cd ~/.config/yadm
+
+source liblinux.sh
+
+export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
+
 # Install packages.
-sudo pamac upgrade
+pamac upgrade
 packages=(
   base-devel
   bind
+  bun
   clang
   cmake
   curl
@@ -20,8 +27,6 @@ packages=(
   make
   neovim
   ninja
-  nodejs
-  npm
   podman
   pyright
   ripgrep
@@ -33,7 +38,7 @@ packages=(
   uv
   xclip
 )
-sudo pamac install "${packages[@]}"
+pamac install "${packages[@]}"
 
 # sudo systemctl enable --now pcscd.service
 
@@ -41,16 +46,9 @@ uv python install
 uv tool install conan
 uv tool install cupcake
 
-# Install Vim plugins.
-[ -e ~/.vim/plug/autoload/plug.vim ] || git clone --depth 1 https://github.com/junegunn/vim-plug ~/.vim/plug/autoload
-env --unset GIT_DIR nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-
-# Generate an SSH key for this machine. Never copy the private half anywhere.
-[ -e ~/.ssh/id_ed25519 ] || ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"
-[ -z "${SSH_AUTH_SOCK:-}" ] || ssh-add ~/.ssh/id_ed25519
-
-yadm="${HOME}/.yadm.git/yadm"
-"${yadm}" remote set-url origin git@github.com:thejohnfreeman/dotfiles.git
+install-vim-plugins
+generate-ssh-key
+configure-yadm
 
 grep -qF '~/.aliases' ~/.zshrc || cat >> ~/.zshrc <<'EOF'
 source ~/.aliases
